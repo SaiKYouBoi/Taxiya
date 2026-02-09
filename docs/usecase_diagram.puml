@@ -1,0 +1,73 @@
+@startuml TaxiYa
+
+left to right direction
+
+actor Admin as A
+actor Traveler as T
+actor Driver as D
+actor Guest as G
+
+rectangle TaxiYa {
+
+    ' ----------- TRAVEL FEATURES -----------
+
+    usecase "Search for a Trip" as U1
+    usecase "Filter Trip Results" as U12
+    usecase "Check Available Seats" as U10
+    usecase "Book a Seat" as U2
+    usecase "Cancel Booking" as U15
+    usecase "Review Driver" as U16
+
+    ' ----------- DRIVER FEATURES -----------
+
+    usecase "Manage Trips" as U4
+    usecase "Create a Trip" as U5
+    usecase "View Trips" as U6
+    usecase "Update a Trip" as U7
+    usecase "Delete a Trip" as U8
+
+    ' ----------- ADMIN FEATURE -----------
+
+    usecase "Validate a Route" as U9
+
+    ' ----------- AUTH -----------
+
+    usecase "Authentication" as U11
+}
+
+' ----------- ACTOR CONNECTIONS -----------
+
+G --> U1
+
+T --> U1
+T --> U2
+T --> U10
+T --> U15
+T --> U16
+
+D --> U4
+
+A --> U9
+
+' ----------- GENERALIZATION (Manage Trips Breakdown) -----------
+
+U4 <|-- U5
+U4 <|-- U6
+U4 <|-- U7
+U4 <|-- U8
+
+' ----------- INCLUDE RELATIONSHIPS -----------
+
+U4 ..> U11 : <<include>>
+U2 ..> U11 : <<include>>
+U9 ..> U11 : <<include>>
+
+U2 ..> U10 : <<include>>
+
+' ----------- EXTENSIONS -----------
+
+U12 ..> U1 : <<extend>>
+U15 ..> U2 : <<extend>>
+
+@enduml
+
