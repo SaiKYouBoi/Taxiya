@@ -31,6 +31,15 @@ Route::get('/payment', function () {
     return view('travler.payment');
 });
 
+Route::get('/trip-managment', function () {
+    return view('driver.trip_managment');
+});
+
+Route::get('/create-trip', function () {
+    return view('driver.create_trip');
+});
+
+
 
 
 
