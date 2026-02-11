@@ -17,8 +17,8 @@ class BookingSeatFactory extends Factory
     public function definition(): array
     {
         return [
-            'booking_id' => Booking::factory(),
-            'seat_id' => Seat::factory(),
+            'booking_id' => Booking::inRandomOrder()->value('id'),
+            'seat_id' => Seat::inRandomOrder()->value('id'),
             'final_price' => fake()->randomFloat(2, 20, 200),
         ];
     }

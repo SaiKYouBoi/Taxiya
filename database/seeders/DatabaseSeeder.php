@@ -16,20 +16,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-
-        $this->call([
-            CitySeeder::class,
+    $this->call([
             UserSeeder::class,
-        ]);
-        $this->call([
+            CitySeeder::class,
+            TaxiSeeder::class,
+            TripSeeder::class,
+            SeatSeeder::class,
+            BookingSeeder::class,
+            BookingSeatSeeder::class,
             PaymentSeeder::class,
-        ]);
-        $this->call([
             ReviewSeeder::class,
         ]);
-        $this->call([
-            SeatSeeder::class,
-            TripSeeder::class,
-        ]);
+        
     }
 }
