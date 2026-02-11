@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+
+        $this->call([
+            CitySeeder::class,
+            UserSeeder::class,
+        ]);
         $this->call([
             PaymentSeeder::class,
         ]);
@@ -23,8 +28,8 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
         ]);
         $this->call([
-            CitySeeder::class,
-            UserSeeder::class,
+            SeatSeeder::class,
+            TripSeeder::class,
         ]);
     }
 }
