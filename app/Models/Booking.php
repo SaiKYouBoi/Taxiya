@@ -40,12 +40,12 @@ class Booking extends Model
 
     public function bookingSeats()
     {
-        return $this->hasMany(Bookings_seats::class, 'booking_id');
+        return $this->hasMany(BookingSeat::class, 'booking_id');
     }
 
     public function seats()
     {
-        return $this->belongsToMany(Seats::class, 'booking_seats', 'booking_id', 'seat_id')
+        return $this->belongsToMany(Seat::class, 'booking_seats', 'booking_id', 'seat_id')
                     ->withPivot('final_price')
                     ->withTimestamps();
     }

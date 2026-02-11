@@ -45,4 +45,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function taxi()
+    {
+        return $this->hasOne(Taxi::class, 'driver_id');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'traveler_id');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'driver_id');
+    }
 }

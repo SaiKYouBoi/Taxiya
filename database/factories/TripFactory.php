@@ -17,7 +17,14 @@ class TripFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+              'departure_city_id'=> City::inRandomOrder()->value('id'),
+             'arrival_city_id'=> City::inRandomOrder()->value('id'),
+              'taxi_id'=> Taxi::inRandomOrder()->value('id'),
+              'departure_datetime'=>now(),
+              'base_price'=>fake()->randomFloat(2,20,100),
+            'status'=>fake()->randomElement(['waiting', 'ongoing', 'completed', 'cancelled']),
         ];
     }
 }
+
+
