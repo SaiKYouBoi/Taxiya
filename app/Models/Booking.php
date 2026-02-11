@@ -38,9 +38,16 @@ class Booking extends Model
         return $this->hasOne(Payment::class);
     }
 
-    public function bookings_seats()
+    public function bookingSeats()
     {
-        return $this->hasOne(BookingSeat::class);
+        return $this->hasMany(Bookings_seats::class, 'booking_id');
+    }
+
+    public function seats()
+    {
+        return $this->belongsToMany(Seats::class, 'booking_seats', 'booking_id', 'seat_id')
+                    ->withPivot('final_price')
+                    ->withTimestamps();
     }
 
 }
