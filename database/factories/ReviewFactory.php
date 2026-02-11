@@ -20,10 +20,8 @@ class ReviewFactory extends Factory
     {
         return [
             'booking_id'=> Booking::inRandomOrder()->value('id'),
-            'draver_id'=> User::inRandomOrder()->value('id'),
+            'user_id'=> User::inRandomOrder()->value('id'),
             'rating'=>fake()->numberBetween(1,5),
-            'comment'=>fake()->sentence(),
-            'created_at'=>now(),
 
         ];
     }

@@ -18,13 +18,19 @@ class TripFactory extends Factory
      */
     public function definition(): array
     {
+        $departureCity = City::inRandomOrder()->first() ?? City::factory()->create();
+        $arrivalCity = City::inRandomOrder()->where('id', '!=', $departureCity->id)->first()
+            ?? City::factory()->create();
+
         return [
-              'departure_city_id'=> City::inRandomOrder()->value('id'),
-             'arrival_city_id'=> City::inRandomOrder()->value('id'),
+              'departure_city_id'=> $departureCity,
+             'arrival_city_id'=> $arrivalCity,
               'taxi_id'=> Taxi::inRandomOrder()->value('id'),
-              'departure_datetime'=>now(),
+            'departure_datetime' => $departure = $this->faker->dateTimeBetween('+1 days', '+7 days'),
+            'arrival_datetime' => $this->faker->dateTimeBetween($departure, '+7 days'),
               'base_price'=>fake()->randomFloat(2,20,100),
             'status'=>fake()->randomElement(['waiting', 'ongoing', 'completed', 'cancelled']),
+            'available_seats' => $this->faker->numberBetween(0, 6),
         ];
     }
 }

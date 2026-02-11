@@ -19,7 +19,6 @@ class BookingFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->value('id'),
             'trip_id' => Trip::inRandomOrder()->value('id'),
-            'qr_code' => fake()->unique()->uuid(),
             'total_price' => fake()->randomFloat(2, 50, 500),
             'status' => fake()->randomElement(['pending', 'confirmed', 'cancelled', 'paid']),
         ];

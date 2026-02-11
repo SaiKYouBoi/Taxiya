@@ -20,7 +20,7 @@ class PaymentFactory extends Factory
         return [
             'booking_id'=> Booking::inRandomOrder()->value('id'),
             'amount'=>fake()->randomFloat(2,20,500),
-            'methode'=>fake()->randomElement(['card','cash','wallet']),
+            'method'=>fake()->randomElement(['card','cash','wallet']),
             'payment_date'=>now(),
         ];
     }
