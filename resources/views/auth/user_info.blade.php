@@ -119,7 +119,7 @@
                             </div>
                         </div>
                         <!-- Year & Color Grid -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
                                     for="vehicle_year">Year of Manufacture</label>
@@ -127,22 +127,7 @@
                                     class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5"
                                     id="vehicle_year" placeholder="2018" type="number" />
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                    for="vehicle_color">Color</label>
-                                <div class="relative">
-                                    <select
-                                        class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
-                                        id="vehicle_color">
-                                        <option>White</option>
-                                        <option>Silver</option>
-                                        <option>Cream (Grand Taxi)</option>
-                                        <option>Black</option>
-                                    </select>
-                                    <span
-                                        class="absolute left-3 top-3 w-4 h-4 rounded-full bg-yellow-100 border border-gray-300"></span>
-                                </div>
-                            </div>
+
                         </div>
                         <!-- License Plate -->
                         <div>
@@ -165,7 +150,7 @@
                         <!-- Grima / Permit Number -->
                         <div>
                             <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                for="permit_number">Grand Taxi Permit Number (Grima)</label>
+                                for="permit_number">Grand Taxi Number</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <span class="material-icons text-gray-400 text-sm">badge</span>

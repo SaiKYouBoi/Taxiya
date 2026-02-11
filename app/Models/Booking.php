@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bookings extends Model
+class Booking extends Model
 {
     /** @use HasFactory<\Database\Factories\BookingsFactory> */
     use HasFactory;
@@ -20,22 +20,22 @@ class Bookings extends Model
 
     public function users()
     {
-        return $this->belongsTo(users::class);
+        return $this->belongsTo(User::class);
     }
 
     public function trips()
     {
-        return $this->belongsTo(trips::class);
+        return $this->belongsTo(Trip::class);
     }
 
     public function reviews()
     {
-        return $this->hasOne(reviews::class);
+        return $this->hasOne(Review::class);
     }
 
     public function payment()
     {
-        return $this->hasOne(payments::class);
+        return $this->hasOne(Payment::class);
     }
 
     public function bookingSeats()
@@ -49,5 +49,5 @@ class Bookings extends Model
                     ->withPivot('final_price')
                     ->withTimestamps();
     }
-    
+
 }

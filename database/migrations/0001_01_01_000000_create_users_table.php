@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone')->nullable();
+            $table->enum('role', ['admin', 'driver', 'traveler'])->default('traveler');
+            $table->timestamp('validated_at')->nullable();
+            $table->integer('total_trips')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
