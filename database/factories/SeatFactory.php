@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Trip;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class SeatFactory extends Factory
     public function definition(): array
     {
         return [
-             'trip_id'=> Trips::inRandomOrder()->value('id'),
+             'trip_id'=> Trip::inRandomOrder()->value('id'),
              'seat_number'=>fake()->numberBetween(1,6),
              'status'=>fake()->randomElement(['available', 'reserved']),
         ];

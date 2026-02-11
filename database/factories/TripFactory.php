@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
+use App\Models\Taxi;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,5 +28,3 @@ class TripFactory extends Factory
         ];
     }
 }
-
-
