@@ -15,11 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            ]);
 
             $this->call([
                PaymentSeeder::class,
@@ -27,5 +22,9 @@ class DatabaseSeeder extends Seeder
             $this->call([
         ReviewSeeder::class,
     ]);
+        $this->call([
+            CitySeeder::class,
+            UserSeeder::class,
+        ]);
     }
 }
