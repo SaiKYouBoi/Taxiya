@@ -1,0 +1,104 @@
+erDiagram
+    USERS {
+        int id PK
+        string name
+        string email "UNIQUE"
+        string password
+        string phone
+        enum role "admin, driver, traveler"
+        timestamp created_at
+    }
+
+    TAXIS {
+        int id PK
+        string license_plate
+        string model
+        int taxi_number
+        int driver_id FK
+    }
+
+    CITIES {
+        int id PK
+        string name "UNIQUE"
+    }
+
+    RECURRENCES {
+        int id PK
+        date start_date
+        date end_date
+        string days_of_week
+    }
+
+    TRIPS {
+        int id PK
+        int departure_city_id FK
+        int arrival_city_id FK
+        int taxi_id FK
+        int recurrence_id FK "nullable"
+        datetime departure_datetime
+        decimal base_price
+        enum status "waiting, ongoing, completed, cancelled"
+    }
+
+    SEATS {
+        int id PK
+        int trip_id FK
+        int seat_number "1-6"
+    }
+
+    BOOKINGS {
+        int id PK
+        int traveler_id FK
+        int trip_id FK
+        string qr_code
+        decimal total_price
+        enum status "pending, confirmed, cancelled, paid"
+        timestamp created_at
+    }
+
+    BOOKING_SEATS {
+        int id PK
+        int booking_id FK
+        int seat_id FK
+        decimal final_price
+    }
+
+    PAYMENTS {
+        int id PK
+        int booking_id FK
+        decimal amount
+        string transaction_id
+        enum method "card, cash, wallet"
+        timestamp payment_date
+    }
+
+    REVIEWS {
+        int id PK
+        int booking_id FK
+        int driver_id FK
+        int rating "1-5"
+        text comment
+        timestamp created_at
+    }   
+
+    %% Relationships
+
+    USERS ||--o{ TAXIS : drives
+    TAXIS ||--o{ TRIPS : operates
+
+    CITIES ||--o{ TRIPS : departure
+    CITIES ||--o{ TRIPS : arrival
+
+    RECURRENCES ||--o{ TRIPS : generates
+
+    TRIPS ||--o{ SEATS : contains
+
+    USERS ||--o{ BOOKINGS : makes
+    TRIPS ||--o{ BOOKINGS : has
+
+    BOOKINGS ||--o{ BOOKING_SEATS : includes
+    SEATS ||--|| BOOKING_SEATS : reserved_in
+
+    BOOKINGS ||--o{ PAYMENTS : paid_by
+    BOOKINGS ||--o| REVIEWS : generates
+    USERS ||--o{ REVIEWS : receives
