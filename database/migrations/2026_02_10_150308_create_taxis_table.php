@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('vehicule_make');
             $table->string('year_manufacture');
             $table->integer('taxi_mumber');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

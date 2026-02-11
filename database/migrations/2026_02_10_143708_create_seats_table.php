@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
+            $table->foreignId('trip_id')->constrained('trips')->cascadeOnDelete();
             $table->integer('seat_number');
             $table->enum('status', ['available', 'reserved'])->default('available');
+            $table->unique(['trip_id', 'seat_number']);
             $table->timestamps();
         });
     }

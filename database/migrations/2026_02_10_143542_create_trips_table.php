@@ -17,8 +17,10 @@ return new class extends Migration
             $table->foreignId('arrival_city_id')->constrained('cities');
             $table->foreignId('taxi_id')->constrained('taxis');
             $table->dateTime('departure_datetime');
+            $table->dateTime('arrival_datetime');
             $table->decimal('base_price', 10, 2);
             $table->enum('status', ['waiting', 'ongoing', 'completed', 'cancelled'])->default('waiting');
+            $table->integer('available_seats')->default(0);
             $table->timestamps();
         });
     }

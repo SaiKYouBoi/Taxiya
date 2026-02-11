@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('trip_id')->constrained()->onDelete('cascade');
-            $table->string('qr_code')->unique();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('trip_id')->constrained()->cascadeOnDelete();
             $table->decimal('total_price', 10, 2);
             $table->enum('status', ['pending', 'confirmed', 'cancelled', 'paid'])->default('pending');
             $table->timestamps();
