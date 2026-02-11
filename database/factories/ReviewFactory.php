@@ -24,7 +24,7 @@ class ReviewFactory extends Factory
             'rating'=>fake()->numberBetween(1,5),
             'comment'=>fake()->sentence(),
             'created_at'=>now(),
-            //
+
         ];
     }
 }

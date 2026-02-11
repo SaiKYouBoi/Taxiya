@@ -17,7 +17,9 @@ class SeatFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+             'trip_id'=> Trips::inRandomOrder()->value('id'),
+             'seat_number'=>fake()->numberBetween(1,6),
+             'status'=>fake()->randomElement(['available', 'reserved']),
         ];
     }
 }
