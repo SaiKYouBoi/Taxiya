@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bookings_seats extends Model
+class BookingSeat extends Model
 {
     /** @use HasFactory<\Database\Factories\BookingsSeatsFactory> */
     use HasFactory;
@@ -18,12 +18,12 @@ class Bookings_seats extends Model
 
     public function booking()
     {
-        return $this->belongsTo(Bookings::class);
+        return $this->belongsTo(Booking::class);
     }
 
     public function seat()
     {
-        return $this->belongsTo(Seats::class);
+        return $this->belongsTo(Seat::class);
     }
-    
+
 }

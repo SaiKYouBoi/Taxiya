@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-            $this->call([
-               PaymentSeeder::class,
-            ]);
-            $this->call([
-        ReviewSeeder::class,
-    ]);
+        $this->call([
+            PaymentSeeder::class,
+        ]);
+        $this->call([
+            ReviewSeeder::class,
+        ]);
         $this->call([
             CitySeeder::class,
             UserSeeder::class,
