@@ -16,10 +16,18 @@ class BookingSeatFactory extends Factory
      */
     public function definition(): array
     {
+        static $usedSeats = [];
+        
+        $seat = Seat::whereNotIn('id', $usedSeats)->inRandomOrder()->first();
+        
+        if ($seat) {
+            $usedSeats[] = $seat->id;
+        }
+        
         return [
             'booking_id' => Booking::inRandomOrder()->value('id'),
-            'seat_id' => Seat::inRandomOrder()->value('id'),
-            'final_price' => fake()->randomFloat(2, 20, 200),
+            'seat_id' => $seat?->id ?? Seat::factory(),
+            'price' => fake()->randomFloat(2, 20, 200),
         ];
     }
 }
