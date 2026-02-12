@@ -13,9 +13,9 @@ class Taxi extends Model
 
     protected $fillable = ['license_plate', 'model', 'vehicule_make', 'year_manufacture', 'taxi_mumber', 'user_id'];
 
-    public function Driver()
+    public function driver()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function Trip()
