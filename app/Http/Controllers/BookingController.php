@@ -13,10 +13,10 @@ class BookingController extends Controller
 {
     public function store(Request $request)
     {
-        $seat = Seat::findOrFail($request->seat_id);
+        $seat = Seat::with('trip')->findOrFail($request->seat_id);
         
         // Calculate price with surcharge for seats 1 and 2
-        $price = $seat->price;
+        $price = $seat->trip->base_price;
         if (in_array($seat->seat_number, [1, 2])) {
             $price = $price * 1.2;
         }
@@ -25,13 +25,12 @@ class BookingController extends Controller
         $booking = Booking::create([
             'user_id' => auth()->id(),
             'trip_id' => $seat->trip_id,
-            'qr_code' => Str::uuid(),
             'total_price' => $price,
             'status' => 'pending',
         ]);
         
         // Update seat status
-        $seat->update(['is_booked' => true]);
+        $seat->update(['status' => 'reserved']);
         
         // Send email
         Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));

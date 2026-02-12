@@ -13,6 +13,7 @@ class Seat extends Model
     protected $fillable = [
         'trip_id',
         'seat_number',
+        'status',
     ];
 
     public function trip()

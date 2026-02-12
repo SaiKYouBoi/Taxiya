@@ -37,13 +37,13 @@
                 @csrf
                 <input type="hidden" name="seat_id" value="{{ $seat->id }}">
                 
-                @if($seat->is_booked)
+                @if($seat->status === 'reserved')
                     <button type="button" class="seat-btn booked" disabled>
                         Seat {{ $seat->seat_number }} - Booked
                     </button>
                 @else
                     <button type="submit" class="seat-btn available">
-                        Seat {{ $seat->seat_number }} - ${{ $seat->price }}
+                        Seat {{ $seat->seat_number }} - ${{ $trip->base_price }}
                     </button>
                 @endif
             </form>
