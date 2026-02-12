@@ -161,6 +161,8 @@
                     </div>
                 </div>
                 <div class="p-6 md:p-8 space-y-8">
+                    <form method="POST" action="{{ route('trips.store') }}">
+                        @csrf
                     <div>
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                             <span class="material-icons-outlined text-primary">map</span>
@@ -172,182 +174,159 @@
                             </div>
                             <div class="relative z-10 group">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
-                                    for="departure">Departure City</label>
+                                    for="departure_city_id">Departure City</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span
                                             class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">trip_origin</span>
                                     </div>
-                                    <input
-                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
-                                        id="departure" placeholder="e.g. Casablanca" type="text" />
+                                    <select name="departure_city_id" id="departure_city_id" required
+                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm">
+                                        <option value="">Select City</option>
+                                        @foreach($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="relative z-10 group">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
-                                    for="arrival">Arrival City</label>
+                                    for="arrival_city_id">Arrival City</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span
                                             class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">location_on</span>
                                     </div>
-                                    <input
-                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
-                                        id="arrival" placeholder="e.g. Rabat" type="text" />
+                                    <select name="arrival_city_id" id="arrival_city_id" required
+                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm">
+                                        <option value="">Select City</option>
+                                        @foreach($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr class="border-gray-100 dark:border-gray-700" />
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white my-6 flex items-center gap-2">
                             <span class="material-icons-outlined text-primary">schedule</span>
                             Date &amp; Time
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="group">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
-                                    for="date">Date</label>
+                                    for="departure_date">Departure Date</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span
                                             class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">calendar_today</span>
                                     </div>
-                                    <input
+                                    <input name="departure_date" required
                                         class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
-                                        id="date" type="date" />
+                                        id="departure_date" type="date" />
+                                    @error('departure_date')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="group">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
-                                    for="time">Departure Time</label>
+                                    for="departure_time">Departure Time</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span
                                             class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">access_time</span>
                                     </div>
-                                    <input
+                                    <input name="departure_time" required
                                         class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
-                                        id="time" type="time" />
+                                        id="departure_time" type="time" />
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                                    for="arrival_date">Arrival Date</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span
+                                            class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">calendar_today</span>
+                                    </div>
+                                    <input name="arrival_date" required
+                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
+                                        id="arrival_date" type="date" />
+                                    @error('arrival_date')
+                                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="group">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
+                                    for="arrival_time">Arrival Time</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span
+                                            class="material-icons-outlined text-gray-400 group-focus-within:text-primary transition-colors">access_time</span>
+                                    </div>
+                                    <input name="arrival_time" required
+                                        class="block w-full pl-10 pr-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm transition-shadow shadow-sm"
+                                        id="arrival_time" type="time" />
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-100 dark:border-blue-800">
+                        <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-100 dark:border-blue-800">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="bg-white dark:bg-blue-900 p-2 rounded-md text-primary">
                                         <span class="material-icons-outlined">update</span>
                                     </div>
                                     <div>
-                                        <label
-                                            class="text-sm font-bold text-gray-900 dark:text-white block cursor-pointer"
-                                            for="recurring-toggle">Make this a recurring trip</label>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">Repeat this trip on
-                                            selected days</p>
+                                        <label class="text-sm font-bold text-gray-900 dark:text-white block cursor-pointer" for="recurring-toggle">Make this a recurring trip</label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Repeat this trip every day for a week</p>
                                     </div>
                                 </div>
                                 <label class="relative inline-flex items-center cursor-pointer">
-                                    <input class="sr-only peer" id="recurring-toggle" type="checkbox" />
-                                    <div
-                                        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary">
-                                    </div>
+                                    <input class="sr-only peer" name="recurring" id="recurring-toggle" type="checkbox" value="1" />
+                                    <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
                                 </label>
-                            </div>
-                            <div class="mt-4 pt-4 border-t border-blue-100 dark:border-blue-800/50 hidden peer-checked:block"
-                                id="days-selector">
-                                <span
-                                    class="block text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 mb-3 tracking-wider">Select
-                                    Days</span>
-                                <div class="flex flex-wrap gap-2">
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Mon</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Tue</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Wed</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Thu</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Fri</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Sat</span>
-                                    </label>
-                                    <label class="cursor-pointer">
-                                        <input class="peer sr-only" name="days" type="checkbox" />
-                                        <span
-                                            class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-600 text-sm font-medium hover:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-all dark:bg-surface-dark dark:border-gray-600 dark:text-gray-300">Sun</span>
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <hr class="border-gray-100 dark:border-gray-700" />
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2 my-6">
                             <span class="material-icons-outlined text-primary">payments</span>
-                            Pricing &amp; Seats
+                            Pricing
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="group">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5"
-                                    for="price">Base Price per Seat</label>
+                                    for="base_price">Base Price per Seat</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <span class="text-gray-500 font-bold">MAD</span>
                                     </div>
-                                    <input
+                                    <input name="base_price" required
                                         class="block w-full pl-12 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-white dark:bg-background-dark text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-lg font-semibold transition-shadow shadow-sm"
-                                        id="price" placeholder="0.00" type="number" />
+                                        id="base_price" placeholder="0.00" step="0.01" type="number" />
                                     <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                         <span class="text-gray-400 text-sm">/ seat</span>
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="bg-yellow-50 dark:bg-yellow-900/10 border border-yellow-100 dark:border-yellow-900/30 rounded-lg p-4 flex gap-3">
-                                <div class="shrink-0 text-yellow-600 dark:text-yellow-500 mt-0.5">
-                                    <span class="material-icons-outlined">info</span>
-                                </div>
-                                <div class="text-sm text-yellow-800 dark:text-yellow-200/80">
-                                    <span class="font-bold block mb-1 text-yellow-900 dark:text-yellow-100">Pricing
-                                        Note:</span>
-                                    Front seats (1 &amp; 2) will automatically include a 20% premium for travelers
-                                    booking them specifically.
-                                </div>
-                            </div>
                         </div>
                     </div>
+                    <input type="hidden" name="taxi_id" value="{{ $taxis->first()->id ?? 1 }}">
                 </div>
                 <div
                     class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex flex-col-reverse sm:flex-row sm:justify-end gap-3 rounded-b-xl">
-                    <button
-                        class="px-6 py-3 rounded-lg text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        Save as Draft
-                    </button>
-                    <button
+                    <button type="submit"
                         class="px-8 py-3 bg-primary hover:bg-blue-600 text-white font-bold rounded-lg shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2">
                         <span>Publish Trip</span>
                         <span class="material-icons-outlined text-lg">arrow_forward</span>
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </main>

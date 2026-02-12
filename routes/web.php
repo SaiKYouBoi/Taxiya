@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TripController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,9 +36,8 @@ Route::get('/trip-managment', function () {
     return view('driver.trip_managment');
 });
 
-Route::get('/create-trip', function () {
-    return view('driver.create_trip');
-});
+Route::get('/create-trip', [TripController::class, 'create']);
+Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
