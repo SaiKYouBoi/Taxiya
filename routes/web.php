@@ -20,7 +20,7 @@ Route::get('/userinfo', function () {
     return view('auth.user_info');
 });
 
-Route::get('/search-trip', [SearchController::class, 'index'])->name('trip.search');
+Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
 Route::get('/confirm-booking', function () {
     return view('travler.confirm_booking');
