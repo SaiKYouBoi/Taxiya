@@ -293,3 +293,50 @@
     </div>
 </main>
 @endsection
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const seats = @json($trip->seats);
+    const basePrice = {{ $trip->base_price }};
+    
+    // Mark booked seats as red and disable
+    seats.forEach(seat => {
+        const seatBtn = document.querySelector(`[data-seat="${seat.seat_number}"]`);
+        if (seatBtn) {
+            if (seat.status === 'reserved') {
+                seatBtn.classList.add('bg-red-100', 'cursor-not-allowed');
+                seatBtn.classList.remove('bg-white', 'border-seat-available');
+                seatBtn.disabled = true;
+                seatBtn.innerHTML = '<span class="material-icons text-red-500">person_off</span>';
+            } else {
+                // Calculate price with 20% surcharge for seats 1-2
+                const price = (seat.seat_number <= 2) ? (basePrice * 1.2).toFixed(2) : basePrice.toFixed(2);
+                seatBtn.setAttribute('data-price', price);
+                seatBtn.setAttribute('data-seat-id', seat.id);
+            }
+        }
+    });
+    
+    // Handle seat selection
+    document.querySelectorAll('.seat-btn:not([disabled])').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const seatId = this.getAttribute('data-seat-id');
+            const price = this.getAttribute('data-price');
+            
+            // Create form and submit
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ route("bookings.store") }}';
+            form.innerHTML = `
+                @csrf
+                <input type="hidden" name="seat_id" value="${seatId}">
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        });
+    });
+});
+</script>
+@endsection
