@@ -20,7 +20,7 @@ return new class extends Migration
             $table->dateTime('arrival_datetime');
             $table->decimal('base_price', 10, 2);
             $table->enum('status', ['waiting', 'ongoing', 'completed', 'cancelled'])->default('waiting');
-            $table->integer('available_seats')->default(0);
+            $table->integer('available_seats')->default(6);
             $table->timestamps();
         });
     }

@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'role',
     ];
 
     /**
@@ -48,7 +50,7 @@ class User extends Authenticatable
 
     public function taxi()
     {
-        return $this->hasOne(Taxi::class, 'driver_id');
+        return $this->hasOne(Taxi::class, 'user_id');
     }
 
     public function bookings()
@@ -60,4 +62,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class, 'driver_id');
     }
+
 }

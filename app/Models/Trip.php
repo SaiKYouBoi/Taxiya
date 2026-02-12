@@ -22,6 +22,11 @@ class Trip extends Model
         'available_seats',
     ];
 
+    protected $casts = [
+        'departure_datetime' => 'datetime',
+        'arrival_datetime' => 'datetime',
+    ];
+
     public function taxi()
     {
         return $this->belongsTo(Taxi::class);
