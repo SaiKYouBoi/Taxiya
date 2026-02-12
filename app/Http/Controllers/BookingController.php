@@ -13,33 +13,49 @@ class BookingController extends Controller
 {
     public function store(Request $request)
     {
-        $seat = Seat::with('trip')->findOrFail($request->seat_id);
+        $seatIds = json_decode($request->seat_ids, true);
         
-        // Double-check seat is still available
-        if ($seat->is_booked) {
-            return redirect()->back()->with('error', 'This seat is already booked!');
+        if (empty($seatIds)) {
+            return redirect()->back()->with('error', 'Please select at least one seat');
         }
         
-        // Calculate price with surcharge for seats 1 and 2 (RB-501)
-        $price = $seat->trip->base_price;
-        if (in_array($seat->seat_number, [1, 2])) {
-            $price = $price * 1.2;
+        $seats = Seat::with('trip')->whereIn('id', $seatIds)->get();
+        
+        // Double-check all seats are available
+        foreach ($seats as $seat) {
+            if ($seat->is_booked) {
+                return redirect()->back()->with('error', "Seat {$seat->seat_number} is already booked!");
+            }
         }
+        
+        // Calculate total price with RB-501 surcharge
+        $totalPrice = 0;
+        foreach ($seats as $seat) {
+            $price = $seat->trip->base_price;
+            if (in_array($seat->seat_number, [1, 2])) {
+                $price *= 1.2;
+            }
+            $totalPrice += $price;
+        }
+        $totalPrice += 5; // Booking fee
         
         // Create booking
         $booking = Booking::create([
             'user_id' => auth()->id(),
-            'trip_id' => $seat->trip_id,
-            'total_price' => $price,
+            'trip_id' => $seats->first()->trip_id,
+            'total_price' => $totalPrice,
             'status' => 'pending',
         ]);
         
-        // Set is_booked to true
-        $seat->update(['status' => 'reserved']);
+        // Reserve all seats
+        foreach ($seats as $seat) {
+            $seat->update(['status' => 'reserved']);
+            $booking->bookingSeats()->create(['seat_id' => $seat->id]);
+        }
         
-        // Send email
         Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
         
         return redirect()->back()->with('success', 'Booking created successfully!');
     }
-}
+    }
+

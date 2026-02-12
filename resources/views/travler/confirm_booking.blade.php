@@ -222,36 +222,17 @@
                     <span class="material-icons text-primary">receipt_long</span>
                     Booking Summary
                 </h2>
-                <div class="space-y-4 mb-6">
-                    <div
-                        class="flex justify-between items-center p-3 bg-primary/5 rounded-lg border border-primary/10">
-                        <div class="flex items-center gap-3">
-                            <div
-                                class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">
-                                2</div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <p class="font-medium text-sm">Front Seat</p>
-                                    <span
-                                        class="bg-yellow-100 text-yellow-800 text-[10px] px-1.5 rounded font-bold border border-yellow-200">PREMIUM</span>
-                                </div>
-                                <p class="text-xs text-slate-500">More comfort &amp; space</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="font-bold text-primary">72 MAD</p>
-                            <p class="text-xs text-slate-400 line-through">60 MAD</p>
-                        </div>
-                    </div>
+                <div id="selected-seats-list" class="space-y-4 mb-6">
+                    <p class="text-sm text-slate-400 text-center">No seats selected</p>
                 </div>
                 <div class="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-2">
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
-                        <span>Base Fare</span>
-                        <span>{{ $trip->base_price }} MAD</span>
+                        <span>Subtotal</span>
+                        <span id="subtotal">0 MAD</span>
                     </div>
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span>Premium Fee (+20%)</span>
-                        <span>{{ $trip->base_price * 0.2 }} MAD</span>
+                        <span id="premium-fee">0 MAD</span>
                     </div>
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span>Booking Fee</span>
@@ -264,14 +245,18 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400">Total Amount</p>
                         <p class="text-xs text-green-600 font-medium">Pay on arrival available</p>
                     </div>
-                    <p class="text-3xl font-bold text-slate-900 dark:text-white">{{ $trip->base_price * 1.2 + 5 }} <span
+                    <p class="text-3xl font-bold text-slate-900 dark:text-white"><span id="total-price">0</span> <span
                             class="text-base font-normal text-slate-500 ml-1">MAD</span></p>
                 </div>
-                <button
-                    class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-lg transition-colors shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2">
-                    <span>Confirm Booking</span>
-                    <span class="material-icons text-sm">arrow_forward</span>
-                </button>
+                <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
+                    @csrf
+                    <input type="hidden" name="seat_ids" id="seat-ids-input" value="">
+                    <button type="submit" id="confirm-btn" disabled
+                        class="w-full bg-slate-400 text-white font-bold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-not-allowed">
+                        <span>Confirm Booking</span>
+                        <span class="material-icons text-sm">arrow_forward</span>
+                    </button>
+                </form>
                 <p class="text-center text-xs text-slate-400 mt-4">
                     By confirming, you agree to our <a class="underline hover:text-primary" href="#">Terms of
                         Service</a>.
@@ -295,58 +280,105 @@
 @endsection
 
 <script>
-// TaxiYa Booking Logic - Strict Implementation
 document.addEventListener('DOMContentLoaded', function() {
     const seats = @json($trip->seats);
     const basePrice = {{ $trip->base_price }};
+    const seatButtons = document.querySelectorAll('.seat-btn');
+    const seatMapping = [1, 2, 3, 6];
+    const selectedSeats = [];
     
-    // Loop through exactly 6 seats
-    seats.forEach(seat => {
-        const seatBtn = document.querySelector(`.seat-btn:has(span:contains("${seat.seat_number}"))`);
-        if (!seatBtn) return;
+    seatButtons.forEach((btn, index) => {
+        const seatNumber = seatMapping[index];
+        const seat = seats.find(s => s.seat_number === seatNumber);
+        if (!seat) return;
         
-        // Visual Logic: RED if is_booked == true, GREEN if is_booked == false
         if (seat.is_booked || seat.status === 'reserved') {
-            // RED - DISABLED
-            seatBtn.disabled = true;
-            seatBtn.classList.remove('bg-white', 'border-seat-available', 'hover:bg-green-50');
-            seatBtn.classList.add('bg-red-100', 'border-red-300', 'cursor-not-allowed');
-            seatBtn.querySelector('div[class*="bg-seat-available"]')?.classList.replace('bg-seat-available', 'bg-red-300');
-            seatBtn.querySelector('span[class*="text-seat-available"]')?.classList.replace('text-seat-available', 'text-red-500');
+            btn.disabled = true;
+            btn.classList.add('opacity-60', 'cursor-not-allowed');
+            const innerDiv = btn.querySelector('div[class*="bg-white"], div[class*="bg-primary"]');
+            if (innerDiv) {
+                innerDiv.classList.remove('bg-white', 'bg-primary', 'border-seat-available', 'border-primary');
+                innerDiv.classList.add('bg-slate-300', 'border-slate-400');
+            }
         } else {
-            // GREEN - AVAILABLE
-            seatBtn.classList.add('bg-green-50', 'border-green-500');
-            seatBtn.setAttribute('data-seat-id', seat.id);
-            seatBtn.setAttribute('data-seat-number', seat.seat_number);
+            btn.setAttribute('data-seat-id', seat.id);
+            btn.setAttribute('data-seat-number', seat.seat_number);
             
-            // Calculate price: RB-501 - 20% surcharge for seats 1 or 2
-            const price = (seat.seat_number === 1 || seat.seat_number === 2) 
-                ? (basePrice * 1.2).toFixed(2) 
-                : basePrice.toFixed(2);
-            seatBtn.setAttribute('data-price', price);
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const seatId = parseInt(seat.id);
+                const idx = selectedSeats.findIndex(s => s.id === seatId);
+                const innerDiv = btn.querySelector('div[class*="bg-"]');
+                
+                if (idx === -1) {
+                    selectedSeats.push({id: seatId, number: seat.seat_number});
+                    innerDiv?.classList.remove('bg-white', 'border-seat-available');
+                    innerDiv?.classList.add('bg-primary', 'border-primary');
+                } else {
+                    selectedSeats.splice(idx, 1);
+                    innerDiv?.classList.remove('bg-primary', 'border-primary');
+                    innerDiv?.classList.add('bg-white', 'border-seat-available');
+                }
+                
+                updateBookingSummary();
+            });
         }
     });
     
-    // JavaScript Selection: Capture Seat ID on click
-    document.querySelectorAll('.seat-btn:not([disabled])').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
+    function updateBookingSummary() {
+        const listEl = document.getElementById('selected-seats-list');
+        const subtotalEl = document.getElementById('subtotal');
+        const premiumFeeEl = document.getElementById('premium-fee');
+        const totalEl = document.getElementById('total-price');
+        const confirmBtn = document.getElementById('confirm-btn');
+        const hiddenInput = document.getElementById('seat-ids-input');
+        
+        if (selectedSeats.length === 0) {
+            listEl.innerHTML = '<p class="text-sm text-slate-400 text-center">No seats selected</p>';
+            subtotalEl.textContent = '0 MAD';
+            premiumFeeEl.textContent = '0 MAD';
+            totalEl.textContent = '0';
+            confirmBtn.disabled = true;
+            confirmBtn.classList.add('bg-slate-400', 'cursor-not-allowed');
+            confirmBtn.classList.remove('bg-primary', 'hover:bg-blue-600', 'shadow-lg');
+            return;
+        }
+        
+        let subtotal = 0;
+        let premiumFee = 0;
+        let html = '';
+        
+        selectedSeats.forEach(s => {
+            const isPremium = s.number === 1 || s.number === 2;
+            const price = isPremium ? basePrice * 1.2 : basePrice;
+            subtotal += basePrice;
+            if (isPremium) premiumFee += basePrice * 0.2;
             
-            const seatId = this.getAttribute('data-seat-id');
-            const seatNumber = this.getAttribute('data-seat-number');
-            const price = this.getAttribute('data-price');
-            
-            // Submit to BookingController@store
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.action = '{{ route("bookings.store") }}';
-            form.innerHTML = `
-                @csrf
-                <input type="hidden" name="seat_id" value="${seatId}">
-            `;
-            document.body.appendChild(form);
-            form.submit();
+            html += `<div class="flex justify-between items-center p-3 bg-primary/5 rounded-lg border border-primary/10">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-sm shadow-md">${s.number}</div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <p class="font-medium text-sm">Seat ${s.number}</p>
+                            ${isPremium ? '<span class="bg-yellow-100 text-yellow-800 text-[10px] px-1.5 rounded font-bold border border-yellow-200">PREMIUM</span>' : ''}
+                        </div>
+                    </div>
+                </div>
+                <p class="font-bold text-primary">${price.toFixed(0)} MAD</p>
+            </div>`;
         });
-    });
+        
+        const total = subtotal + premiumFee + 5;
+        
+        listEl.innerHTML = html;
+        subtotalEl.textContent = `${subtotal.toFixed(0)} MAD`;
+        premiumFeeEl.textContent = `${premiumFee.toFixed(0)} MAD`;
+        totalEl.textContent = total.toFixed(0);
+        hiddenInput.value = JSON.stringify(selectedSeats.map(s => s.id));
+        
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove('bg-slate-400', 'cursor-not-allowed');
+        confirmBtn.classList.add('bg-primary', 'hover:bg-blue-600', 'shadow-lg', 'shadow-blue-500/30');
+    }
 });
 </script>
