@@ -10,26 +10,26 @@
                 <h2 class="text-sm uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-4">Trip
                     Details</h2>
                 <div class="flex flex-col gap-1 mb-6">
-                    <h1 class="text-2xl font-bold leading-tight">Casablanca</h1>
+                    <h1 class="text-2xl font-bold leading-tight">{{ $trip->departureCity->name }}</h1>
                     <div class="flex items-center text-slate-400">
                         <span class="material-icons transform rotate-90">arrow_right_alt</span>
                     </div>
-                    <h1 class="text-2xl font-bold leading-tight">Marrakech</h1>
+                    <h1 class="text-2xl font-bold leading-tight">{{ $trip->arrivalCity->name }}</h1>
                 </div>
                 <div class="relative pl-4 border-l-2 border-slate-200 dark:border-slate-700 space-y-8 my-8">
                     <div class="relative">
                         <div
                             class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-primary border-2 border-white dark:border-slate-900">
                         </div>
-                        <p class="text-lg font-bold">08:00 AM</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Gare Voyageurs, Casa</p>
+                        <p class="text-lg font-bold">{{ $trip->departure_datetime->format('H:i') }}</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">{{ $trip->departureCity->name }}</p>
                     </div>
                     <div class="relative">
                         <div
                             class="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-600 border-2 border-white dark:border-slate-900">
                         </div>
-                        <p class="text-lg font-bold">11:30 AM</p>
-                        <p class="text-sm text-slate-500 dark:text-slate-400">Gare Routière, Marrakech</p>
+                        <p class="text-lg font-bold">{{ $trip->arrival_datetime->format('H:i') }}</p>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">{{ $trip->arrivalCity->name }}</p>
                     </div>
                 </div>
                 <div
@@ -51,7 +51,7 @@
                         data-alt="Portrait of a smiling driver"
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzmDdbcdHRVnyuD-lKTsrhK_RHW3-sTuDvYP5m3WjZcUjNfGXiISoi8m6ikvcQ1J3Yx85v-7R90SLWHE-DxQem58AoUhlhW_D_-syJxsBcG1i1WEft3xmtLLMz0xSd9A8iediWjCu1kP5qABUcQy4e1Q3UqulWwFu66gYKu7z5XtXpVvVMyzjSJoZzHaH-r6pP0iVa42xhRbkVAdJWnAc1jAQEiYi2b8_sq9OCWYScj5QoDvdLWxpI4Sv_DH9-9he4gN9vf0Q3Ag" />
                     <div>
-                        <p class="font-bold">Ahmed Benali</p>
+                        <p class="font-bold">{{ $trip->taxi->driver->name }}</p>
                         <div class="flex items-center text-xs text-slate-500 dark:text-slate-400">
                             <span class="material-icons text-yellow-400 text-sm mr-1">star</span>
                             4.8 (124 trips)
@@ -61,7 +61,7 @@
                 <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div class="flex items-center justify-between text-sm">
                         <span class="text-slate-500 dark:text-slate-400">Vehicle</span>
-                        <span class="font-medium">Mercedes 240D</span>
+                        <span class="font-medium">{{ $trip->taxi->model }}</span>
                     </div>
                     <div class="flex gap-3 mt-3">
                         <div class="tooltip group relative">
@@ -247,11 +247,11 @@
                 <div class="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-2">
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span>Base Fare</span>
-                        <span>60 MAD</span>
+                        <span>{{ $trip->base_price }} MAD</span>
                     </div>
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span>Premium Fee (+20%)</span>
-                        <span>12 MAD</span>
+                        <span>{{ $trip->base_price * 0.2 }} MAD</span>
                     </div>
                     <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
                         <span>Booking Fee</span>
@@ -264,7 +264,7 @@
                         <p class="text-sm text-slate-500 dark:text-slate-400">Total Amount</p>
                         <p class="text-xs text-green-600 font-medium">Pay on arrival available</p>
                     </div>
-                    <p class="text-3xl font-bold text-slate-900 dark:text-white">77 <span
+                    <p class="text-3xl font-bold text-slate-900 dark:text-white">{{ $trip->base_price * 1.2 + 5 }} <span
                             class="text-base font-normal text-slate-500 ml-1">MAD</span></p>
                 </div>
                 <button
