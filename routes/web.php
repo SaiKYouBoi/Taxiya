@@ -9,17 +9,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user', function () {
-    return view('auth.login_user');
-});
+// Route::get('/user', function () {
+//     return view('auth.login_user');
+// });
 
 Route::get('/pending', function () {
     return view('auth.user_pending');
 });
 
-Route::get('/userinfo', function () {
+Route::get('/dashboard-info', function () {
     return view('auth.user_info');
-});
+})->name('driver-dashboard');
 
 Route::get('/search-trip', function () {
     return view('travler.search_trip');
@@ -38,6 +38,8 @@ Route::get('/trip-managment', function () {
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
+Route::get('/create-trip', [TripController::class, 'create']);
+Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
