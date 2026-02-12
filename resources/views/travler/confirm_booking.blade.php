@@ -294,38 +294,49 @@
 </main>
 @endsection
 
-
 <script>
+// TaxiYa Booking Logic - Strict Implementation
 document.addEventListener('DOMContentLoaded', function() {
     const seats = @json($trip->seats);
     const basePrice = {{ $trip->base_price }};
     
-    // Mark booked seats as red and disable
+    // Loop through exactly 6 seats
     seats.forEach(seat => {
-        const seatBtn = document.querySelector(`[data-seat="${seat.seat_number}"]`);
-        if (seatBtn) {
-            if (seat.status === 'reserved') {
-                seatBtn.classList.add('bg-red-100', 'cursor-not-allowed');
-                seatBtn.classList.remove('bg-white', 'border-seat-available');
-                seatBtn.disabled = true;
-                seatBtn.innerHTML = '<span class="material-icons text-red-500">person_off</span>';
-            } else {
-                // Calculate price with 20% surcharge for seats 1-2
-                const price = (seat.seat_number <= 2) ? (basePrice * 1.2).toFixed(2) : basePrice.toFixed(2);
-                seatBtn.setAttribute('data-price', price);
-                seatBtn.setAttribute('data-seat-id', seat.id);
-            }
+        const seatBtn = document.querySelector(`.seat-btn:has(span:contains("${seat.seat_number}"))`);
+        if (!seatBtn) return;
+        
+        // Visual Logic: RED if is_booked == true, GREEN if is_booked == false
+        if (seat.is_booked || seat.status === 'reserved') {
+            // RED - DISABLED
+            seatBtn.disabled = true;
+            seatBtn.classList.remove('bg-white', 'border-seat-available', 'hover:bg-green-50');
+            seatBtn.classList.add('bg-red-100', 'border-red-300', 'cursor-not-allowed');
+            seatBtn.querySelector('div[class*="bg-seat-available"]')?.classList.replace('bg-seat-available', 'bg-red-300');
+            seatBtn.querySelector('span[class*="text-seat-available"]')?.classList.replace('text-seat-available', 'text-red-500');
+        } else {
+            // GREEN - AVAILABLE
+            seatBtn.classList.add('bg-green-50', 'border-green-500');
+            seatBtn.setAttribute('data-seat-id', seat.id);
+            seatBtn.setAttribute('data-seat-number', seat.seat_number);
+            
+            // Calculate price: RB-501 - 20% surcharge for seats 1 or 2
+            const price = (seat.seat_number === 1 || seat.seat_number === 2) 
+                ? (basePrice * 1.2).toFixed(2) 
+                : basePrice.toFixed(2);
+            seatBtn.setAttribute('data-price', price);
         }
     });
     
-    // Handle seat selection
+    // JavaScript Selection: Capture Seat ID on click
     document.querySelectorAll('.seat-btn:not([disabled])').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
+            
             const seatId = this.getAttribute('data-seat-id');
+            const seatNumber = this.getAttribute('data-seat-number');
             const price = this.getAttribute('data-price');
             
-            // Create form and submit
+            // Submit to BookingController@store
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = '{{ route("bookings.store") }}';
@@ -339,4 +350,3 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@endsection

@@ -15,7 +15,12 @@ class BookingController extends Controller
     {
         $seat = Seat::with('trip')->findOrFail($request->seat_id);
         
-        // Calculate price with surcharge for seats 1 and 2
+        // Double-check seat is still available
+        if ($seat->is_booked) {
+            return redirect()->back()->with('error', 'This seat is already booked!');
+        }
+        
+        // Calculate price with surcharge for seats 1 and 2 (RB-501)
         $price = $seat->trip->base_price;
         if (in_array($seat->seat_number, [1, 2])) {
             $price = $price * 1.2;
@@ -29,7 +34,7 @@ class BookingController extends Controller
             'status' => 'pending',
         ]);
         
-        // Update seat status
+        // Set is_booked to true
         $seat->update(['status' => 'reserved']);
         
         // Send email

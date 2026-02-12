@@ -16,6 +16,12 @@ class Seat extends Model
         'status',
     ];
 
+    // Accessor for is_booked
+    public function getIsBookedAttribute()
+    {
+        return $this->status === 'reserved';
+    }
+
     public function trip()
     {
         return $this->belongsTo(Trip::class);
