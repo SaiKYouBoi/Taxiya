@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\BookingSeat;
 use App\Models\Booking;
 use App\Models\Seat;
+use App\Models\Trip;
 use Illuminate\Database\Seeder;
 
 class BookingSeatSeeder extends Seeder
@@ -14,6 +15,11 @@ class BookingSeatSeeder extends Seeder
         $bookings = Booking::all();
 
         foreach ($bookings as $booking) {
+            // Get trip
+            $trip = Trip::find($booking->trip_id);
+            
+            if (!$trip) continue;
+            
             // Get available seats for this trip
             $availableSeats = Seat::where('trip_id', $booking->trip_id)
                 ->where('status', 'available')
@@ -23,7 +29,7 @@ class BookingSeatSeeder extends Seeder
 
             foreach ($availableSeats as $seat) {
                 // Apply 20% surcharge for front seats (1-2)
-                $price = $booking->trip->base_price;
+                $price = $trip->base_price;
                 if (in_array($seat->seat_number, [1, 2])) {
                     $price = $price * 1.2;
                 }
@@ -39,7 +45,6 @@ class BookingSeatSeeder extends Seeder
             }
 
             // Update trip available seats
-            $trip = $booking->trip;
             $trip->update([
                 'available_seats' => Seat::where('trip_id', $trip->id)
                     ->where('status', 'available')
