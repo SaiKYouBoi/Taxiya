@@ -22,6 +22,10 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
+public function traveler()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
 
     public function trips()
     {

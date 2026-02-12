@@ -18,7 +18,7 @@ class Taxi extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function Trip()
+    public function trips()
     {
         return $this->hasMany(Trip::class);
     }

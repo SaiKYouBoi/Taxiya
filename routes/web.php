@@ -1,10 +1,10 @@
 <?php
-
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BookingController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -31,9 +31,9 @@ Route::get('/payment', function () {
     return view('travler.payment');
 });
 
-Route::get('/trip-managment', function () {
-    return view('driver.trip_managment');
-});
+Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+
+Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
