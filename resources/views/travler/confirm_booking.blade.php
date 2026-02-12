@@ -207,7 +207,9 @@
                 </div>
                 <form id="booking-form" method="POST" action="{{ route('bookings.store') }}">
                     @csrf
+                    <input type="hidden" name="trip_id" value="{{ $trip->id }}">
                     <input type="hidden" name="seat_ids" id="seat-ids-input" value="">
+                    <input type="hidden" name="total_price" id="total-price-input" value="0">
                     <button type="submit" id="confirm-btn" disabled
                         class="w-full bg-slate-400 text-white font-bold py-4 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 cursor-not-allowed">
                         <span>Confirm Booking</span>
@@ -219,7 +221,7 @@
                         Service</a>.
                 </p>
             </div>
-            <div
+            {{-- <div
                 class="bg-white dark:bg-slate-900 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
                 <div class="flex gap-2">
                     <input
@@ -230,7 +232,7 @@
                         Apply
                     </button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </main>
@@ -334,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
         premiumFeeEl.textContent = `${premiumFee.toFixed(0)} MAD`;
         totalEl.textContent = total.toFixed(0);
         hiddenInput.value = JSON.stringify(selectedSeats.map(s => s.id));
+        document.getElementById('total-price-input').value = total.toFixed(2);
         
         confirmBtn.disabled = false;
         confirmBtn.classList.remove('bg-slate-400', 'cursor-not-allowed');

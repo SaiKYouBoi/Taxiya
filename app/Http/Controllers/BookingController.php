@@ -49,8 +49,15 @@ class BookingController extends Controller
         
         // Reserve all seats
         foreach ($seats as $seat) {
+            $price = $seat->trip->base_price;
+            if (in_array($seat->seat_number, [1, 2])) {
+                $price *= 1.2;
+            }
             $seat->update(['status' => 'reserved']);
-            $booking->bookingSeats()->create(['seat_id' => $seat->id]);
+            $booking->bookingSeats()->create([
+                'seat_id' => $seat->id,
+                'price' => $price
+            ]);
         }
         
         Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
