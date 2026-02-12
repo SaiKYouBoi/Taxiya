@@ -107,79 +107,36 @@
                                     <span
                                         class="text-[10px] uppercase font-bold mt-2 text-slate-400 tracking-wider">Driver</span>
                                 </div>
-                                <button class="seat-btn w-1/3 flex flex-col items-center group relative">
+                                @foreach($trip->seats->whereIn('seat_number', [1, 2])->sortBy('seat_number') as $seat)
+                                <button class="seat-btn w-1/3 flex flex-col items-center group relative" data-seat-number="{{ $seat->seat_number }}">
                                     <div
                                         class="absolute -top-4 -right-2 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md transform group-hover:scale-110 transition-transform">
                                         PREMIUM
                                     </div>
                                     <div
-                                        class="relative w-full aspect-[4/5] bg-white dark:bg-slate-800 rounded-2xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
+                                        class="seat-inner relative w-full aspect-[4/5] bg-white dark:bg-slate-800 rounded-2xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
                                         <div
                                             class="absolute -top-3 w-3/4 h-4 bg-seat-available rounded-md shadow-sm group-hover:bg-seat-available-hover transition-colors">
                                         </div>
-                                        <div
-                                            class="w-2/3 h-1/2 rounded-t-lg border-t-2 border-dashed border-seat-available/30 mt-2">
-                                        </div>
-                                        <span class="absolute text-seat-available font-bold text-lg">1</span>
-                                    </div>
-                                    <div
-                                        class="seat-tooltip absolute -bottom-10 left-1/2 -translate-x-1/2 w-max bg-slate-800 text-white text-xs rounded px-2 py-1 z-30 pointer-events-none shadow-lg">
-                                        Front Seat (+20%)
+                                        <span class="seat-number absolute text-seat-available font-bold text-lg">{{ $seat->seat_number }}</span>
                                     </div>
                                 </button>
-                                <button
-                                    class="seat-btn w-1/3 flex flex-col items-center group relative transform scale-105">
-                                    <div
-                                        class="absolute -top-4 -right-2 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
-                                        PREMIUM
-                                    </div>
-                                    <div
-                                        class="relative w-full aspect-[4/5] bg-primary rounded-2xl shadow-lg shadow-blue-500/40 border-2 border-primary flex flex-col items-center justify-center overflow-hidden">
-                                        <div class="absolute -top-3 w-3/4 h-4 bg-blue-600 rounded-md shadow-sm"></div>
-                                        <span class="material-icons text-white text-3xl drop-shadow-md">check</span>
-                                        <span class="absolute bottom-2 text-white/80 text-xs font-medium">2</span>
-                                    </div>
-                                </button>
+                                @endforeach
                             </div>
                             <div
                                 class="bg-slate-200/50 dark:bg-slate-700/30 rounded-3xl p-3 border border-slate-200 dark:border-slate-700/50">
                                 <div class="flex justify-between gap-2">
-                                    <button class="seat-btn flex-1 flex flex-col items-center group relative">
+                                    @foreach($trip->seats->whereIn('seat_number', [3, 4, 5, 6])->sortBy('seat_number') as $seat)
+                                    <button class="seat-btn flex-1 flex flex-col items-center group relative" data-seat-number="{{ $seat->seat_number }}">
                                         <div
-                                            class="relative w-full aspect-[3/4] bg-white dark:bg-slate-800 rounded-xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
+                                            class="seat-inner relative w-full aspect-[3/4] bg-white dark:bg-slate-800 rounded-xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
                                             <div
                                                 class="absolute -top-2 w-3/4 h-3 bg-seat-available rounded-sm shadow-sm">
                                             </div>
-                                            <span class="text-seat-available font-bold text-sm mt-1">3</span>
+                                            <span class="seat-number text-seat-available font-bold text-sm mt-1">{{ $seat->seat_number }}</span>
                                         </div>
                                     </button>
-                                    <div class="flex-1 flex flex-col items-center opacity-60">
-                                        <div
-                                            class="relative w-full aspect-[3/4] bg-seat-booked dark:bg-slate-700/50 rounded-xl border border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center cursor-not-allowed">
-                                            <div
-                                                class="absolute -top-2 w-3/4 h-3 bg-slate-300 dark:bg-slate-600 rounded-sm">
-                                            </div>
-                                            <span class="material-icons text-seat-booked-icon text-xl">person_off</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 flex flex-col items-center opacity-60">
-                                        <div
-                                            class="relative w-full aspect-[3/4] bg-seat-booked dark:bg-slate-700/50 rounded-xl border border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center cursor-not-allowed">
-                                            <div
-                                                class="absolute -top-2 w-3/4 h-3 bg-slate-300 dark:bg-slate-600 rounded-sm">
-                                            </div>
-                                            <span class="material-icons text-seat-booked-icon text-xl">person_off</span>
-                                        </div>
-                                    </div>
-                                    <button class="seat-btn flex-1 flex flex-col items-center group relative">
-                                        <div
-                                            class="relative w-full aspect-[3/4] bg-white dark:bg-slate-800 rounded-xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
-                                            <div
-                                                class="absolute -top-2 w-3/4 h-3 bg-seat-available rounded-sm shadow-sm">
-                                            </div>
-                                            <span class="text-seat-available font-bold text-sm mt-1">6</span>
-                                        </div>
-                                    </button>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -284,40 +241,42 @@ document.addEventListener('DOMContentLoaded', function() {
     const seats = @json($trip->seats);
     const basePrice = {{ $trip->base_price }};
     const seatButtons = document.querySelectorAll('.seat-btn');
-    const seatMapping = [1, 2, 3, 6];
     const selectedSeats = [];
     
-    seatButtons.forEach((btn, index) => {
-        const seatNumber = seatMapping[index];
+    seatButtons.forEach(btn => {
+        const seatNumber = parseInt(btn.getAttribute('data-seat-number'));
         const seat = seats.find(s => s.seat_number === seatNumber);
         if (!seat) return;
+        
+        const innerDiv = btn.querySelector('.seat-inner');
+        const numberSpan = btn.querySelector('.seat-number');
         
         if (seat.is_booked || seat.status === 'reserved') {
             btn.disabled = true;
             btn.classList.add('opacity-60', 'cursor-not-allowed');
-            const innerDiv = btn.querySelector('div[class*="bg-white"], div[class*="bg-primary"]');
-            if (innerDiv) {
-                innerDiv.classList.remove('bg-white', 'bg-primary', 'border-seat-available', 'border-primary');
-                innerDiv.classList.add('bg-slate-300', 'border-slate-400');
-            }
+            innerDiv.classList.remove('bg-white', 'border-seat-available', 'group-hover:bg-green-50');
+            innerDiv.classList.add('bg-slate-300', 'border-slate-400');
+            innerDiv.innerHTML = '<span class="material-icons text-slate-500 text-xl">person_off</span>';
         } else {
             btn.setAttribute('data-seat-id', seat.id);
-            btn.setAttribute('data-seat-number', seat.seat_number);
             
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
                 const seatId = parseInt(seat.id);
                 const idx = selectedSeats.findIndex(s => s.id === seatId);
-                const innerDiv = btn.querySelector('div[class*="bg-"]');
                 
                 if (idx === -1) {
                     selectedSeats.push({id: seatId, number: seat.seat_number});
-                    innerDiv?.classList.remove('bg-white', 'border-seat-available');
-                    innerDiv?.classList.add('bg-primary', 'border-primary');
+                    innerDiv.classList.remove('bg-white', 'border-seat-available');
+                    innerDiv.classList.add('bg-primary', 'border-primary');
+                    numberSpan.classList.remove('text-seat-available');
+                    numberSpan.classList.add('text-white');
                 } else {
                     selectedSeats.splice(idx, 1);
-                    innerDiv?.classList.remove('bg-primary', 'border-primary');
-                    innerDiv?.classList.add('bg-white', 'border-seat-available');
+                    innerDiv.classList.remove('bg-primary', 'border-primary');
+                    innerDiv.classList.add('bg-white', 'border-seat-available');
+                    numberSpan.classList.remove('text-white');
+                    numberSpan.classList.add('text-seat-available');
                 }
                 
                 updateBookingSummary();
