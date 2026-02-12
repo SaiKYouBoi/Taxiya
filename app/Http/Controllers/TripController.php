@@ -30,4 +30,7 @@ class TripController extends Controller
 
         return redirect()->route('trips.show', $trip)->with('success', 'Trip created successfully!');
     }
+
+
+
 }

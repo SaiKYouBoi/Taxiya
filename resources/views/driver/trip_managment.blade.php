@@ -73,8 +73,8 @@
                     data-alt="Portrait of taxi driver Ahmed Benali"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR_lIfA0UFJtZ_7oieMr-YRXIJ35Bkp-fvFvHcWOegNX-6xKz0JOJ_2jvnBumgM_WhOfPVhUoIIdXUniMRjl14Xyx9NYJXkQOMKADoEhk24RodWsnUW_LG_AENK948YdVaBAs4qgEV7wikE46oe44zQvk9InA3yHrd4wQfofYGrs9u1zrS4iIu6XFtN6L9cV7hLNtcE5w96qYcIgYVwUb8WOQprknOl5bMZBPqRWcDyi17UJyPkYyBZqsBlcAUg-VchwLcXY32pQ" />
                 <div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white">Ahmed Benali</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Mercedes 240 (Grand Taxi)</p>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white">{{auth()->user()->name ?? 'quest'}}</h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ auth()->user()->taxi?->model ?? 'NO taxi Assigned'}}</p>
                 </div>
             </div>
             <!-- Quick Stats -->
@@ -191,22 +191,75 @@
         </div>
         <!-- Trips List -->
         <div class="flex flex-col gap-4">
+                @forelse($trips as $trip)
+        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+                <!-- Time & Date -->
+                <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                    <div class="text-2xl font-bold text-gray-900 dark:text-white">
+                        {{ \Carbon\Carbon::parse($trip->date_time)->format('H:i') }}
+                    </div>
+                    <div class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
+                        {{ \Carbon\Carbon::parse($trip->date_time)->isToday() ? 'Today' : \Carbon\Carbon::parse($trip->date_time)->format('d M') }}
+                    </div>
+                </div>
+
+                <!-- Route -->
+                <div class="flex-1 flex flex-col gap-2">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-1 flex flex-col justify-between h-[60px] py-1">
+                            <div>
+                                <span class="text-xs text-gray-400 block mb-0.5">Start</span>
+                                <h3 class="font-bold text-gray-700 dark:text-gray-200">{{ $trip->departureCity->name }}</h3>
+                            </div>
+                            <div>
+                                <span class="text-xs text-gray-400 block mb-0.5">Destination</span>
+                                <h3 class="font-bold text-gray-900 dark:text-white">{{ $trip->arrivalCity->name }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Occupancy -->
+                <div class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
+                    <div class="flex justify-between items-end mb-2">
+                        <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Occupancy</span>
+                        <span class="text-lg font-bold text-primary">
+                            {{ $trip->bookings->sum('seats_count') }}<span class="text-gray-400 text-sm">/6</span>
+                        </span>
+                    </div>
+                    <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                        <div class="bg-primary h-full rounded-full" style="width: {{ ($trip->bookings->sum('seats_count') / 6) * 100 }}%"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
+                    <button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg shadow-md hover:bg-blue-600 transition-colors">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    @empty
+        <div class="text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
+            <p class="text-gray-500">Vous n'avez pas encore créé de trajets.</p>
+        </div>
+    @endforelse
             <!-- Trip Card 1 (Active/Today) -->
-            <div
+            <!-- <div
                 class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
                 <div class="absolute right-0 top-0 p-4 opacity-10 md:opacity-100 md:relative md:p-0">
-                    <!-- Background decoration for visual interest -->
-                </div>
+                 </div>
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <!-- Time & Date -->
-                    <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                     <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
                         <div class="text-2xl font-bold text-gray-900 dark:text-white">14:30</div>
                         <div
                             class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
                             Today</div>
                     </div>
-                    <!-- Route Visualization -->
-                    <div class="flex-1 flex flex-col gap-2">
+                     <div class="flex-1 flex flex-col gap-2">
                         <div class="flex items-center gap-4">
                             <div class="flex flex-col items-center gap-1">
                                 <div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
@@ -229,8 +282,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Occupancy Status -->
-                    <div
+                     <div
                         class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
                         <div class="flex justify-between items-end mb-2">
                             <span
@@ -246,8 +298,7 @@
                             Full Capacity
                         </div>
                     </div>
-                    <!-- Actions -->
-                    <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
+                     <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
                         <button
                             class="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                             title="Edit">
@@ -264,20 +315,18 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- Trip Card 2 (Upcoming) -->
-            <div
+            <!-- <div
                 class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow group">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <!-- Time & Date -->
-                    <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                     <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
                         <div class="text-2xl font-bold text-gray-900 dark:text-white">09:00</div>
                         <div
                             class="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">
                             Tomorrow</div>
                     </div>
-                    <!-- Route Visualization -->
-                    <div class="flex-1 flex flex-col gap-2">
+                     <div class="flex-1 flex flex-col gap-2">
                         <div class="flex items-center gap-4">
                             <div class="flex flex-col items-center gap-1">
                                 <div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
@@ -298,8 +347,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Occupancy Status -->
-                    <div
+                     <div
                         class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
                         <div class="flex justify-between items-end mb-2">
                             <span
@@ -315,8 +363,7 @@
                             Filling Up
                         </div>
                     </div>
-                    <!-- Actions -->
-                    <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
+                     <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
                         <button
                             class="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                             title="Edit">
@@ -334,20 +381,18 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- Trip Card 3 (Future) -->
-            <div
+            <!-- <div
                 class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow group opacity-80 hover:opacity-100">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <!-- Time & Date -->
-                    <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                     <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
                         <div class="text-2xl font-bold text-gray-900 dark:text-white">08:00</div>
                         <div
                             class="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">
                             Nov 12</div>
                     </div>
-                    <!-- Route Visualization -->
-                    <div class="flex-1 flex flex-col gap-2">
+                     <div class="flex-1 flex flex-col gap-2">
                         <div class="flex items-center gap-4">
                             <div class="flex flex-col items-center gap-1">
                                 <div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
@@ -368,8 +413,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Occupancy Status -->
-                    <div
+                     <div
                         class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
                         <div class="flex justify-between items-end mb-2">
                             <span
@@ -385,8 +429,7 @@
                             Scheduled
                         </div>
                     </div>
-                    <!-- Actions -->
-                    <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
+                     <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
                         <button
                             class="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
                             title="Edit">
@@ -404,7 +447,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <!-- Recurring Schedule Promo / Empty State Helper -->
         <div
