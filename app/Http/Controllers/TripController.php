@@ -27,6 +27,7 @@ class TripController extends Controller
             'arrival_date' => 'required|date',
             'arrival_time' => 'required',
             'base_price' => 'required|numeric|min:0',
+            'recurring' => 'nullable|boolean',
         ]);
 
         $departure = $validated['departure_date'] . ' ' . $validated['departure_time'];
@@ -44,15 +45,29 @@ class TripController extends Controller
             return redirect()->back()->withErrors(['arrival_date' => 'Arrival must be after departure'])->withInput();
         }
 
-        $trip = Trip::create([
+        $tripData = [
             'departure_city_id' => $validated['departure_city_id'],
             'arrival_city_id' => $validated['arrival_city_id'],
             'taxi_id' => $validated['taxi_id'],
             'departure_datetime' => $departure,
             'arrival_datetime' => $arrival,
             'base_price' => $validated['base_price'],
-        ]);
+        ];
 
-        return redirect()->back()->with('success', 'Trip created successfully!');
+        if ($request->has('recurring')) {
+            for ($i = 0; $i < 7; $i++) {
+                $newDeparture = date('Y-m-d H:i:s', strtotime($departure . ' +' . $i . ' days'));
+                $newArrival = date('Y-m-d H:i:s', strtotime($arrival . ' +' . $i . ' days'));
+                
+                Trip::create(array_merge($tripData, [
+                    'departure_datetime' => $newDeparture,
+                    'arrival_datetime' => $newArrival,
+                ]));
+            }
+        } else {
+            Trip::create($tripData);
+        }
+
+        return redirect()->back()->with('success', 'Trip(s) created successfully!');
     }
 }
