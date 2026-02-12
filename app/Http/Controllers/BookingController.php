@@ -37,7 +37,6 @@ class BookingController extends Controller
             }
             $totalPrice += $price;
         }
-        $totalPrice += 5; // Booking fee
         
         // Create booking
         $booking = Booking::create([

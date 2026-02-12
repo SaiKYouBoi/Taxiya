@@ -191,10 +191,6 @@
                         <span>Premium Fee (+20%)</span>
                         <span id="premium-fee">0 MAD</span>
                     </div>
-                    <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
-                        <span>Booking Fee</span>
-                        <span>5 MAD</span>
-                    </div>
                 </div>
                 <div class="border-t border-dashed border-slate-300 dark:border-slate-700 my-4"></div>
                 <div class="flex justify-between items-end mb-6">
@@ -329,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>`;
         });
         
-        const total = subtotal + premiumFee + 5;
+        const total = subtotal + premiumFee;
         
         listEl.innerHTML = html;
         subtotalEl.textContent = `${subtotal.toFixed(0)} MAD`;

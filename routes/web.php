@@ -25,7 +25,7 @@ Route::get('/search-trip', function () {
     return view('travler.search_trip');
 });
 
-Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show');
+Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
 Route::get('/payment', function () {
     return view('travler.payment');
