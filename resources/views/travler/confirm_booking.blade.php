@@ -95,65 +95,32 @@
                         </div>
                         <div class="relative z-10 flex flex-col gap-10 mt-8">
                             <div class="flex justify-between items-end px-2 gap-4">
-                                <!-- Driver seat -->
                                 <div class="w-1/3 flex flex-col items-center group">
-                                    <div class="relative w-full aspect-[4/5] bg-slate-200 dark:bg-slate-700 rounded-2xl border border-slate-300 dark:border-slate-600 shadow-inner flex flex-col items-center justify-center opacity-80">
-                                        <div class="absolute -top-3 w-3/4 h-4 bg-slate-300 dark:bg-slate-600 rounded-md border border-slate-300 dark:border-slate-500"></div>
-                                        <span class="material-icons text-slate-400 dark:text-slate-500 text-3xl">steering_wheel</span>
-                                    </div>
-                                    <span class="text-[10px] uppercase font-bold mt-2 text-slate-400 tracking-wider">Driver</span>
-                                </div>
-                                
-                                @foreach($trip->seats->where('seat_number', '<=', 2) as $seat)
-                                    @if($seat->status === 'available')
-                                        <form method="POST" action="{{ route('bookings.store') }}" class="w-1/3 flex flex-col items-center group relative">
-                                            @csrf
-                                            <input type="hidden" name="seat_id" value="{{ $seat->id }}">
-                                            <div class="absolute -top-4 -right-2 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">PREMIUM</div>
-                                            <button type="submit" class="relative w-full aspect-[4/5] bg-white dark:bg-slate-800 rounded-2xl shadow-seat hover:shadow-seat-hover transition-all duration-300 border-2 border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 flex flex-col items-center justify-center">
-                                                <div class="absolute -top-3 w-3/4 h-4 bg-green-500 rounded-md shadow-sm"></div>
-                                                <span class="text-green-600 font-bold text-lg">{{ $seat->seat_number }}</span>
-                                                <span class="text-xs text-slate-500 mt-1">{{ number_format($trip->base_price * 1.2, 2) }} MAD</span>
-                                            </button>
-                                        </form>
-                                    @else
-                                        <div class="w-1/3 flex flex-col items-center opacity-60">
-                                            <div class="absolute -top-4 -right-2 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">PREMIUM</div>
-                                            <div class="relative w-full aspect-[4/5] bg-red-100 dark:bg-red-900/20 rounded-2xl border border-red-300 dark:border-red-600 flex flex-col items-center justify-center cursor-not-allowed">
-                                                <div class="absolute -top-3 w-3/4 h-4 bg-red-300 dark:bg-red-600 rounded-md"></div>
-                                                <span class="material-icons text-red-500 text-xl">person_off</span>
-                                                <span class="text-xs text-red-600 mt-1">{{ $seat->seat_number }}</span>
-                                            </div>
+                                    <div
+                                        class="relative w-full aspect-[4/5] bg-slate-200 dark:bg-slate-700 rounded-2xl border border-slate-300 dark:border-slate-600 shadow-inner flex flex-col items-center justify-center opacity-80">
+                                        <div
+                                            class="absolute -top-3 w-3/4 h-4 bg-slate-300 dark:bg-slate-600 rounded-md border border-slate-300 dark:border-slate-500">
                                         </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                            
-                            <div class="bg-slate-200/50 dark:bg-slate-700/30 rounded-3xl p-3 border border-slate-200 dark:border-slate-700/50">
-                                <div class="flex justify-between gap-2">
-                                    @foreach($trip->seats->where('seat_number', '>', 2) as $seat)
-                                        @if($seat->status === 'available')
-                                            <form method="POST" action="{{ route('bookings.store') }}" class="flex-1 flex flex-col items-center group relative">
-                                                @csrf
-                                                <input type="hidden" name="seat_id" value="{{ $seat->id }}">
-                                                <button type="submit" class="relative w-full aspect-[3/4] bg-white dark:bg-slate-800 rounded-xl shadow-seat hover:shadow-seat-hover transition-all duration-300 border-2 border-green-500 hover:bg-green-50 dark:hover:bg-green-900/10 flex flex-col items-center justify-center">
-                                                    <div class="absolute -top-2 w-3/4 h-3 bg-green-500 rounded-sm shadow-sm"></div>
-                                                    <span class="text-green-600 font-bold text-sm mt-1">{{ $seat->seat_number }}</span>
-                                                    <span class="text-xs text-slate-500">{{ number_format($trip->base_price, 2) }}</span>
-                                                </button>
-                                            </form>
-                                        @else
-                                            <div class="flex-1 flex flex-col items-center opacity-60">
-                                                <div class="relative w-full aspect-[3/4] bg-red-100 dark:bg-red-900/20 rounded-xl border border-red-300 dark:border-red-600 flex flex-col items-center justify-center cursor-not-allowed">
-                                                    <div class="absolute -top-2 w-3/4 h-3 bg-red-300 dark:bg-red-600 rounded-sm"></div>
-                                                    <span class="material-icons text-red-500 text-xl">person_off</span>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                        <span
+                                            class="material-icons text-slate-400 dark:text-slate-500 text-3xl">steering_wheel</span>
+                                    </div>
+                                    <span
+                                        class="text-[10px] uppercase font-bold mt-2 text-slate-400 tracking-wider">Driver</span>
                                 </div>
-                            </div>
-                        </div>g">1</span>
+                                <button class="seat-btn w-1/3 flex flex-col items-center group relative">
+                                    <div
+                                        class="absolute -top-4 -right-2 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md transform group-hover:scale-110 transition-transform">
+                                        PREMIUM
+                                    </div>
+                                    <div
+                                        class="relative w-full aspect-[4/5] bg-white dark:bg-slate-800 rounded-2xl shadow-seat group-hover:shadow-seat-hover transition-all duration-300 border-2 border-seat-available group-hover:bg-green-50 dark:group-hover:bg-green-900/10 flex flex-col items-center justify-center">
+                                        <div
+                                            class="absolute -top-3 w-3/4 h-4 bg-seat-available rounded-md shadow-sm group-hover:bg-seat-available-hover transition-colors">
+                                        </div>
+                                        <div
+                                            class="w-2/3 h-1/2 rounded-t-lg border-t-2 border-dashed border-seat-available/30 mt-2">
+                                        </div>
+                                        <span class="absolute text-seat-available font-bold text-lg">1</span>
                                     </div>
                                     <div
                                         class="seat-tooltip absolute -bottom-10 left-1/2 -translate-x-1/2 w-max bg-slate-800 text-white text-xs rounded px-2 py-1 z-30 pointer-events-none shadow-lg">
