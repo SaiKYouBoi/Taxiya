@@ -3,16 +3,25 @@
 namespace Database\Seeders;
 
 use App\Models\Review;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Booking;
 use Illuminate\Database\Seeder;
 
 class ReviewSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Review::factory()->count(30)->create();
+        // Create reviews for some confirmed/paid bookings
+        $bookings = Booking::whereIn('status', ['confirmed', 'paid'])
+            ->inRandomOrder()
+            ->limit(10)
+            ->get();
+
+        foreach ($bookings as $booking) {
+            Review::create([
+                'booking_id' => $booking->id,
+                'user_id' => $booking->user_id,
+                'rating' => rand(3, 5), // Ratings between 3-5 stars
+            ]);
+        }
     }
 }
