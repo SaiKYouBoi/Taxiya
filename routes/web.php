@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +20,7 @@ Route::get('/userinfo', function () {
     return view('auth.user_info');
 });
 
-Route::get('/search-trip', function () {
-    return view('travler.search_trip');
-});
+Route::get('/search-trip', [SearchController::class, 'index'])->name('trip.search');
 
 Route::get('/confirm-booking', function () {
     return view('travler.confirm_booking');
