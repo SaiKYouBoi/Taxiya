@@ -210,7 +210,7 @@
                     </div>
                     <hr class="border-gray-100 dark:border-gray-700" />
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white my-6 flex items-center gap-2">
                             <span class="material-icons-outlined text-primary">schedule</span>
                             Date &amp; Time
                         </h3>
@@ -294,7 +294,7 @@
                     </div>
                     <hr class="border-gray-100 dark:border-gray-700" />
                     <div>
-                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2 my-6">
                             <span class="material-icons-outlined text-primary">payments</span>
                             Pricing
                         </h3>
