@@ -72,144 +72,187 @@
                         <div class="bg-primary h-2 rounded-full transition-all duration-500" style="width: 33%"></div>
                     </div>
                 </div>
-                <div
-                    class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
-                    <div class="p-8">
-                        <div class="mb-8">
-                            <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Create your account</h1>
-                            <p class="text-slate-500 dark:text-slate-400">Choose how you want to use TaxiYa.</p>
-                        </div>
-                        <form class="space-y-8">
-                            <div class="space-y-4">
-                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">I am
-                                    a...</label>
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <label class="relative cursor-pointer group">
-                                        <input checked="" class="peer sr-only role-radio" name="role" type="radio"
-                                            value="traveler" />
-                                        <div
-                                            class="p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 hover:border-primary/50 transition-all bg-white dark:bg-slate-800 h-full flex flex-col items-center text-center gap-3">
-                                            <div
-                                                class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center">
-                                                <span class="material-icons">luggage</span>
-                                            </div>
-                                            <div>
-                                                <h3 class="font-bold text-slate-900 dark:text-white">Traveler</h3>
-                                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Book rides and
-                                                    travel across cities.</p>
-                                            </div>
-                                            <div
-                                                class="absolute top-3 right-3 opacity-0 transform scale-50 transition-all duration-200 check-icon">
-                                                <span class="material-icons text-primary text-xl">check_circle</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <label class="relative cursor-pointer group">
-                                        <input class="peer sr-only role-radio" name="role" type="radio"
-                                            value="driver" />
-                                        <div
-                                            class="p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 hover:border-primary/50 transition-all bg-white dark:bg-slate-800 h-full flex flex-col items-center text-center gap-3">
-                                            <div
-                                                class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 flex items-center justify-center">
-                                                <span class="material-icons">directions_car</span>
-                                            </div>
-                                            <div>
-                                                <h3 class="font-bold text-slate-900 dark:text-white">Driver</h3>
-                                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Accept bookings
-                                                    and earn money.</p>
-                                            </div>
-                                            <div
-                                                class="absolute top-3 right-3 opacity-0 transform scale-50 transition-all duration-200 check-icon">
-                                                <span class="material-icons text-primary text-xl">check_circle</span>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div
-                                class="peer-checked/driver:block bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg p-4 flex gap-3">
-                                <span class="material-icons text-blue-600 dark:text-blue-400 shrink-0">info</span>
-                                <div>
-                                    <h4 class="text-sm font-bold text-blue-900 dark:text-blue-300">Pending Admin Validation
-                                    </h4>
-                                    <p class="text-xs text-blue-700 dark:text-blue-400 mt-0.5">
-                                        Driver accounts require manual verification of documents (Permit, License,
-                                        Insurance). You can complete your profile now, but activation takes 24-48 hours.
-                                    </p>
-                                </div>
-                            </div>
-                            <div
-                                class="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800 rounded-lg p-4 flex gap-3">
-                                <span
-                                    class="material-icons text-amber-600 dark:text-amber-400 shrink-0">admin_panel_settings</span>
-                                <div>
-                                    <h4 class="text-sm font-bold text-amber-900 dark:text-amber-300">Important for Drivers
-                                    </h4>
-                                    <p class="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
-                                        If you register as a Driver, your account will be <strong>Pending
-                                            Validation</strong> until an admin approves your documents.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="border-t border-gray-100 dark:border-gray-700 pt-6">
-                                <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4">Personal Details</h3>
-                                <div class="grid grid-cols-1 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                            for="full_name">Full Name</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span class="material-icons text-gray-400 text-sm">person</span>
-                                            </div>
-                                            <input
-                                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
-                                                id="full_name" placeholder="e.g. Youssef El Amrani" type="text" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                            for="email">Email Address</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span class="material-icons text-gray-400 text-sm">email</span>
-                                            </div>
-                                            <input
-                                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
-                                                id="email" placeholder="youssef@example.com" type="email" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                            for="phone">Phone Number</label>
-                                        <div class="flex">
-                                            <div
-                                                class="flex items-center justify-center px-3 rounded-l-lg border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-700 text-slate-500 dark:text-slate-300 sm:text-sm">
-                                                <img alt="Morocco" class="mr-2"
-                                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtERfQeFYRTLcGQsLGJXiSFnKcZw2ZYi-5PZ1ZLz95ngwDSKBMDg8JpFg4_OnLbETKH6HEjzXiKzv6ubixEi26-ASr0_FbONl4QrHeEwle7ieLwPddMUgY29h5HC6kRFNcyh2yjMVQrpNhCEAr7ekL5tA9yLjulwIlqFFWCV73mz_fjvihP7Sud9EVZ8HEiZZ9ncbLDMLiR3SQ7_LGPwx0Q4mT-qtZKEkvHl5uhTitJpXT08KBMVLiunqZbX6bJZm_NorbDlVv2g"
-                                                    srcset="https://flagcdn.com/w40/ma.png 2x" width="20" />
-                                                +212
-                                            </div>
-                                            <input
-                                                class="flex-1 rounded-r-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5"
-                                                id="phone" placeholder="6 00 00 00 00" type="tel" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                <form action="">
                     <div
-                        class="px-8 py-5 bg-gray-50 dark:bg-[#15202b] border-t border-gray-100 dark:border-gray-700 flex items-center justify-end">
-                        <button
-                            class="bg-primary hover:bg-primary-dark text-white font-medium py-2.5 px-8 rounded-lg shadow-sm shadow-teal-500/30 transition-all flex items-center gap-2"
-                            type="button">
-                            Continue
-                            <span class="material-icons text-sm">arrow_forward</span>
-                        </button>
+                        class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div class="p-8">
+                            <div class="mb-8">
+                                <h1 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Create your account</h1>
+                                <p class="text-slate-500 dark:text-slate-400">Choose how you want to use TaxiYa.</p>
+                            </div>
+                            <form class="space-y-8">
+                                <div class="space-y-4">
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">I am
+                                        a...</label>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <label class="relative cursor-pointer group">
+                                            <input checked="" class="peer sr-only role-radio" name="role"
+                                                type="radio" value="traveler" />
+                                            <div
+                                                class="p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 hover:border-primary/50 transition-all bg-white dark:bg-slate-800 h-full flex flex-col items-center text-center gap-3">
+                                                <div
+                                                    class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                                                    <span class="material-icons">luggage</span>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-bold text-slate-900 dark:text-white">Traveler</h3>
+                                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Book rides
+                                                        and
+                                                        travel across cities.</p>
+                                                </div>
+                                                <div
+                                                    class="absolute top-3 right-3 opacity-0 transform scale-50 transition-all duration-200 check-icon">
+                                                    <span class="material-icons text-primary text-xl">check_circle</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                        <label class="relative cursor-pointer group">
+                                            <input class="peer sr-only role-radio" name="role" type="radio"
+                                                value="driver" />
+                                            <div
+                                                class="p-4 rounded-xl border-2 border-gray-200 dark:border-gray-600 hover:border-primary/50 transition-all bg-white dark:bg-slate-800 h-full flex flex-col items-center text-center gap-3">
+                                                <div
+                                                    class="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400 flex items-center justify-center">
+                                                    <span class="material-icons">directions_car</span>
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-bold text-slate-900 dark:text-white">Driver</h3>
+                                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Accept
+                                                        bookings
+                                                        and earn money.</p>
+                                                </div>
+                                                <div
+                                                    class="absolute top-3 right-3 opacity-0 transform scale-50 transition-all duration-200 check-icon">
+                                                    <span class="material-icons text-primary text-xl">check_circle</span>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div
+                                    class="peer-checked/driver:block bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg p-4 flex gap-3">
+                                    <span class="material-icons text-blue-600 dark:text-blue-400 shrink-0">info</span>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-blue-900 dark:text-blue-300">Pending Admin
+                                            Validation
+                                        </h4>
+                                        <p class="text-xs text-blue-700 dark:text-blue-400 mt-0.5">
+                                            Driver accounts require manual verification of documents (Permit, License,
+                                            Insurance). You can complete your profile now, but activation takes 24-48 hours.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800 rounded-lg p-4 flex gap-3">
+                                    <span
+                                        class="material-icons text-amber-600 dark:text-amber-400 shrink-0">admin_panel_settings</span>
+                                    <div>
+                                        <h4 class="text-sm font-bold text-amber-900 dark:text-amber-300">Important for
+                                            Drivers
+                                        </h4>
+                                        <p class="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
+                                            If you register as a Driver, your account will be <strong>Pending
+                                                Validation</strong> until an admin approves your documents.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="border-t border-gray-100 dark:border-gray-700 pt-6">
+                                    <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4">Personal Details
+                                    </h3>
+                                    <div class="grid grid-cols-1 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                                for="name">Full Name</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="material-icons text-gray-400 text-sm">person</span>
+                                                </div>
+                                                <input
+                                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                                    id="full_name" placeholder="e.g. Youssef El Amrani" type="text"
+                                                    name="name" :value="old('name')" required autofocus
+                                                    autocomplete="name" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                                for="email">Email Address</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="material-icons text-gray-400 text-sm">email</span>
+                                                </div>
+                                                <input
+                                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                                    id="email" placeholder="youssef@example.com" type="email" />
+                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                                for="password">Password</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="material-icons text-gray-400 text-sm">person</span>
+                                                </div>
+                                                <input
+                                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                                    id="full_name" placeholder="" type="password" name="password"
+                                                    required autocomplete="new-password" />
+                                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                                for="full_name">Confirm Password</label>
+                                            <div class="relative">
+                                                <div
+                                                    class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                                    <span class="material-icons text-gray-400 text-sm">person</span>
+                                                </div>
+                                                <input
+                                                    class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                                    id="full_name" placeholder="e.g. Youssef El Amrani" type="text"
+                                                    type="text" name="name" :value="old('name')" required
+                                                    autofocus autocomplete="name" />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                                for="phone">Phone Number</label>
+                                            <div class="flex">
+                                                <div
+                                                    class="flex items-center justify-center px-3 rounded-l-lg border border-r-0 border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-slate-700 text-slate-500 dark:text-slate-300 sm:text-sm">
+                                                    <img alt="Morocco" class="mr-2"
+                                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtERfQeFYRTLcGQsLGJXiSFnKcZw2ZYi-5PZ1ZLz95ngwDSKBMDg8JpFg4_OnLbETKH6HEjzXiKzv6ubixEi26-ASr0_FbONl4QrHeEwle7ieLwPddMUgY29h5HC6kRFNcyh2yjMVQrpNhCEAr7ekL5tA9yLjulwIlqFFWCV73mz_fjvihP7Sud9EVZ8HEiZZ9ncbLDMLiR3SQ7_LGPwx0Q4mT-qtZKEkvHl5uhTitJpXT08KBMVLiunqZbX6bJZm_NorbDlVv2g"
+                                                        srcset="https://flagcdn.com/w40/ma.png 2x" width="20" />
+                                                    +212
+                                                </div>
+                                                <input
+                                                    class="flex-1 rounded-r-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5"
+                                                    id="phone" placeholder="6 00 00 00 00" type="tel" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div
+                            class="px-8 py-5 bg-gray-50 dark:bg-[#15202b] border-t border-gray-100 dark:border-gray-700 flex items-center justify-end">
+                            <button
+                                class="bg-primary hover:bg-primary-dark text-white font-medium py-2.5 px-8 rounded-lg shadow-sm shadow-teal-500/30 transition-all flex items-center gap-2"
+                                type="button">
+                                Continue
+                                <span class="material-icons text-sm">arrow_forward</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <div class="mt-8 flex justify-center gap-6 text-xs text-slate-500 dark:text-slate-400">
                     <a class="hover:underline" href="#">Privacy Policy</a>
                     <a class="hover:underline" href="#">Terms of Service</a>
