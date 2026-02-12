@@ -72,4 +72,10 @@ class TripController extends Controller
 
         return redirect()->back()->with('success', 'Trip(s) created successfully!');
     }
+    
+    public function show($id)
+    {
+        $trip = Trip::with(['seats', 'departureCity', 'arrivalCity', 'taxi.driver'])->findOrFail($id);
+        return view('travler.confirm_booking', compact('trip'));
+    }
 }

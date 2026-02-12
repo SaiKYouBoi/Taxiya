@@ -13,7 +13,14 @@ class Seat extends Model
     protected $fillable = [
         'trip_id',
         'seat_number',
+        'status',
     ];
+
+    // Accessor for is_booked
+    public function getIsBookedAttribute()
+    {
+        return $this->status === 'reserved';
+    }
 
     public function trip()
     {
