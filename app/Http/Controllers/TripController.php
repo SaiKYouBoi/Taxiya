@@ -33,7 +33,7 @@ class TripController extends Controller
     
     public function show($id)
     {
-        $trip = Trip::with('seats')->findOrFail($id);
+        $trip = Trip::with(['seats', 'departureCity', 'arrivalCity', 'taxi.driver'])->findOrFail($id);
         return view('travler.confirm_booking', compact('trip'));
     }
 }
