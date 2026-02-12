@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->integer('rating');
-            $table->timestamp('created_at');
             $table->timestamps();
         });
     }
