@@ -43,5 +43,12 @@ public function displaySearch(Request $request)
         $query->where('base_price', '<=', $request->max_price);
     $trips = $query->orderBy('departure_datetime', 'asc')->get();
 
+    if ($request->filled('premium_only')) {
+        $query->whereHas('seats', function($q)
+        {
+            $q->whereIn('seat_number', [1, 2])
+              ->where('status', 'available');
+        }, '>=', $request->seats);
+    }
     return view('travler.search_trip', compact('cities', 'trips'));
 }}
