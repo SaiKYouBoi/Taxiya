@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +22,7 @@ Route::get('/dashboard-info', function () {
     return view('auth.user_info');
 })->name('driver-dashboard');
 
-Route::get('/search-trip', function () {
-    return view('travler.search_trip');
-});
+Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
