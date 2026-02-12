@@ -45,6 +45,8 @@ class TripController extends Controller
             return redirect()->back()->withErrors(['arrival_date' => 'Arrival must be after departure'])->withInput();
         }
 
+    
+
         $tripData = [
             'departure_city_id' => $validated['departure_city_id'],
             'arrival_city_id' => $validated['arrival_city_id'],
