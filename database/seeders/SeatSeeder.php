@@ -3,25 +3,24 @@
 namespace Database\Seeders;
 
 use App\Models\Seat;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Trip;
 use Illuminate\Database\Seeder;
 
 class SeatSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Create 6 seats for each trip
-        \App\Models\Trip::all()->each(function ($trip) {
-            for ($i = 1; $i <= 6; $i++) {
+        $trips = Trip::all();
+
+        foreach ($trips as $trip) {
+            // Create 6 seats for each trip (1-2 front, 3-6 back)
+            for ($seatNumber = 1; $seatNumber <= 6; $seatNumber++) {
                 Seat::create([
                     'trip_id' => $trip->id,
-                    'seat_number' => $i,
+                    'seat_number' => $seatNumber,
                     'status' => 'available',
                 ]);
             }
-        });
+        }
     }
 }
