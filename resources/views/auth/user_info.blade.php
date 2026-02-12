@@ -71,7 +71,7 @@
             <div class="mb-10">
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Step 2
-                        of 4</span>
+                        of 3</span>
                     <span class="text-xs font-medium text-primary">50% Completed</span>
                 </div>
                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -81,7 +81,6 @@
                 <div class="flex justify-between mt-4 text-xs font-medium text-slate-400 sm:flex">
                     <span class="text-primary">Personal Info</span>
                     <span class="text-slate-900 dark:text-white">Vehicle Details</span>
-                    <span>Documents</span>
                     <span>Review</span>
                 </div>
             </div>
