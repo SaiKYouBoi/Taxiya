@@ -30,4 +30,10 @@ class TripController extends Controller
 
         return redirect()->route('trips.show', $trip)->with('success', 'Trip created successfully!');
     }
+    
+    public function show($id)
+    {
+        $trip = Trip::with('seats')->findOrFail($id);
+        return view('trips.show', compact('trip'));
+    }
 }
