@@ -55,7 +55,7 @@ public function traveler()
     public function seats()
     {
         return $this->belongsToMany(Seat::class, 'booking_seats', 'booking_id', 'seat_id')
-                    ->withPivot('final_price')
+                    ->withPivot('price')
                     ->withTimestamps();
     }
 

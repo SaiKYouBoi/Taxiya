@@ -86,7 +86,7 @@ class BookingController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Booking created successfully!');
+            return redirect()->route('payment.show', $booking->id);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
