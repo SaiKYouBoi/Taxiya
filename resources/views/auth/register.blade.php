@@ -82,6 +82,20 @@
                         </div>
                         <form method="POST" action="{{ route('register') }}" class="space-y-8">
                             @csrf
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                    for="name">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons text-gray-400 text-sm">person</span>
+                                    </div>
+                                    <input
+                                        class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                        id="full_name" placeholder="e.g. Youssef El Amrani" type="text" name="name"
+                                        :value="old('name')" required autofocus autocomplete="name" />
+                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                </div>
+                            </div>
                             <div class="space-y-4">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">I am
                                     a...</label>
@@ -126,7 +140,7 @@
                                         </div>
                                     </label>
                                 </div>
-                            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('role')" class="mt-2" />
                             </div>
 
                             <div
@@ -147,22 +161,7 @@
                                 <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4">Personal Details
                                 </h3>
                                 <div class="grid grid-cols-1 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                            for="name">Full Name</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span class="material-icons text-gray-400 text-sm">person</span>
-                                            </div>
-                                            <input
-                                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
-                                                id="full_name" placeholder="e.g. Youssef El Amrani" type="text"
-                                                name="name" :value="old('name')" required autofocus
-                                                autocomplete="name" />
-                                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
-                                        </div>
-                                    </div>
+
                                     <div>
                                         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
                                             for="email">Email Address</label>
@@ -221,9 +220,10 @@
                                             </div>
                                             <input
                                                 class="flex-1 rounded-r-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5"
-                                                :value="old('phone')" id="phone" name="phone" placeholder="6 00 00 00 00" type="tel" />
+                                                :value="old('phone')" id="phone" name="phone"
+                                                placeholder="6 00 00 00 00" type="tel" />
                                         </div>
-                                         <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                     </div>
                                 </div>
                             </div>
