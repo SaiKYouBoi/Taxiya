@@ -49,12 +49,8 @@ Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
 
-<<<<<<< HEAD
 Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
-=======
-
-
 
 
  Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
@@ -64,10 +60,6 @@ Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooki
 Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
     ->name('mybookings.index');
 
-
-
-
->>>>>>> 146ce31 (Added bookings controller changes to match bookings logic)
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -79,8 +71,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-
-
 });
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])

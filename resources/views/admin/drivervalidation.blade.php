@@ -142,10 +142,10 @@
                     <p class="text-xs text-slate-500 truncate">Admin</p>
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                <button class="text-slate-400 hover:text-primary transition-colors" type="submit">
-                    <span class="material-icons-round">logout</span>
-                </button>
+                    @csrf
+                    <button class="text-slate-400 hover:text-primary transition-colors" type="submit">
+                        <span class="material-icons-round">logout</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -211,51 +211,62 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 dark:divide-primary-900/30">
-                            <tr class="group hover:bg-slate-50 dark:hover:bg-primary-900/10 transition-colors">
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-12 w-12">
-                                            <img alt="Ahmed Benali Portrait"
-                                                class="h-12 w-12 rounded-full object-cover ring-2 ring-white dark:ring-primary-900"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6luD8KjG6t-wu1obmEsDqgZ0x4MfIb9EWMEArI1jj0Jz2qdDqvw-pk0JPY86FQ6pMB7VBvRJRKPg7E1QjQrdicNcHC596BDRcG2VXHVjB0OYd8gtTNh4ZMVM9mc5cqIoUVfejJBz8bCz4tAlyjpISOUyxudC3yU2_X6u4Oc-f5mIVcZL1424Y7J0vlx8Yoqbf5kALi09tHYEFyTgk1v_tB8xFQBrpIzPmq9l8YYw32iSZDLIt7XA9uM8dlZVkO8YUd5Vibblk_Q" />
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-base font-bold text-slate-900 dark:text-white">Ahmed Benali
+                            @if ($drivers->isEmpty())
+                                <p class="text-center py-6 text-slate-500">
+                                    No pending drivers.
+                                </p>
+                            @endif
+                            @foreach ($drivers as $driver)
+                                <tr class="group hover:bg-slate-50 dark:hover:bg-primary-900/10 transition-colors">
+                                    <td class="px-6 py-5 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-12 w-12">
+                                                <img alt="Ahmed Benali Portrait"
+                                                    class="h-12 w-12 rounded-full object-cover ring-2 ring-white dark:ring-primary-900"
+                                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6luD8KjG6t-wu1obmEsDqgZ0x4MfIb9EWMEArI1jj0Jz2qdDqvw-pk0JPY86FQ6pMB7VBvRJRKPg7E1QjQrdicNcHC596BDRcG2VXHVjB0OYd8gtTNh4ZMVM9mc5cqIoUVfejJBz8bCz4tAlyjpISOUyxudC3yU2_X6u4Oc-f5mIVcZL1424Y7J0vlx8Yoqbf5kALi09tHYEFyTgk1v_tB8xFQBrpIzPmq9l8YYw32iSZDLIt7XA9uM8dlZVkO8YUd5Vibblk_Q" />
                                             </div>
-                                            <div class="text-sm text-slate-500">ID: #TX-9822</div>
+                                            <div class="ml-4">
+                                                <div class="text-base font-bold text-slate-900 dark:text-white">
+                                                    {{ $driver->name }}
+                                                </div>
+                                                <div class="text-sm text-slate-500">ID: #TX-9822</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <div class="flex flex-col gap-1">
-                                        <span
-                                            class="px-2.5 py-1 w-fit rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">
-                                            1234-A-50
-                                        </span>
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 font-medium">Fiat
-                                            Doblo</span>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-5 whitespace-nowrap">
-                                    <div class="text-sm text-slate-900 dark:text-white font-medium">Oct 12, 2023</div>
-                                    <div class="text-xs text-slate-500">10:42 AM</div>
-                                </td>
-                                <td class="px-6 py-5 whitespace-nowrap text-right">
-                                    <div class="flex items-center justify-end gap-3">
-                                        <button
-                                            class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors text-sm font-semibold shadow-sm">
-                                            <span class="material-icons-round text-lg">close</span>
-                                            Reject
-                                        </button>
-                                        <button
-                                            class="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors text-sm font-semibold shadow-md shadow-emerald-500/20">
-                                            <span class="material-icons-round text-lg">check</span>
-                                            Approve
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="group hover:bg-slate-50 dark:hover:bg-primary-900/10 transition-colors">
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap">
+                                        <div class="flex flex-col gap-1">
+                                            <span
+                                                class="px-2.5 py-1 w-fit rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono font-medium text-slate-600 dark:text-slate-300">
+                                                {{ optional($driver->taxi)->license_plate ?? 'N/A' }}
+                                            </span>
+                                            <span
+                                                class="text-sm text-slate-600 dark:text-slate-400 font-medium">{{ optional($driver->taxi)->vehicule_make }}
+                                                {{ optional($driver->taxi)->model }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap">
+                                        <div class="text-sm text-slate-900 dark:text-white font-medium">
+                                            {{ $driver->created_at->format('M d, Y') }}</div>
+                                        <div class="text-xs text-slate-500">{{ $driver->created_at->format('H:i A') }}
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-5 whitespace-nowrap text-right">
+                                        <div class="flex items-center justify-end gap-3">
+                                            <button
+                                                class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors text-sm font-semibold shadow-sm">
+                                                <span class="material-icons-round text-lg">close</span>
+                                                Reject
+                                            </button>
+                                            <button
+                                                class="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors text-sm font-semibold shadow-md shadow-emerald-500/20">
+                                                <span class="material-icons-round text-lg">check</span>
+                                                Approve
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            {{-- <tr class="group hover:bg-slate-50 dark:hover:bg-primary-900/10 transition-colors">
                                 <td class="px-6 py-5 whitespace-nowrap">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 h-12 w-12">
@@ -428,7 +439,7 @@
                                         </button>
                                     </div>
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>
