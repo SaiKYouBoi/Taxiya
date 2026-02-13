@@ -8,7 +8,7 @@ use App\Models\Seat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -27,48 +27,69 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Please select at least one seat');
         }
 
-        $seats = Seat::with('trip')->whereIn('id', $seatIds)->get();
+        DB::beginTransaction();
 
-        // Double-check all seats are available
-        foreach ($seats as $seat) {
-            if ($seat->is_booked) {
-                return redirect()->back()->with('error', "Seat {$seat->seat_number} is already booked!");
+        try {
+            $seats = Seat::with('trip')->whereIn('id', $seatIds)->lockForUpdate()->get();
+
+            // Double-check all seats are available
+            foreach ($seats as $seat) {
+                if ($seat->is_booked) {
+                    DB::rollBack();
+                    return redirect()->back()->with('error', "Seat {$seat->seat_number} is already booked!");
+                }
             }
-        }
 
-        // Calculate total price with RB-501 surcharge
-        $totalPrice = 0;
-        foreach ($seats as $seat) {
-            $price = $seat->trip->base_price;
-            if (in_array($seat->seat_number, [1, 2])) {
-                $price *= 1.2;
+            $trip = $seats->first()->trip;
+
+            // Check available seats
+            if ($trip->available_seats < count($seatIds)) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Not enough available seats!');
             }
-            $totalPrice += $price;
-        }
 
-        // Create booking
-        $booking = Booking::create([
-            'user_id' => auth()->id(),
-            'trip_id' => $seats->first()->trip_id,
-            'total_price' => $totalPrice,
-            'status' => 'pending',
-        ]);
-
-        // Reserve all seats
-        foreach ($seats as $seat) {
-            $price = $seat->trip->base_price;
-            if (in_array($seat->seat_number, [1, 2])) {
-                $price *= 1.2;
+            // Calculate total price with RB-501 surcharge
+            $totalPrice = 0;
+            foreach ($seats as $seat) {
+                $price = $seat->trip->base_price;
+                if (in_array($seat->seat_number, [1, 2])) {
+                    $price *= 1.2;
+                }
+                $totalPrice += $price;
             }
-            $seat->update(['status' => 'reserved']);
-            $booking->bookingSeats()->create([
-                'seat_id' => $seat->id,
-                'price' => $price
+
+            // Create booking
+            $booking = Booking::create([
+                'user_id' => auth()->id(),
+                'trip_id' => $trip->id,
+                'total_price' => $totalPrice,
+                'status' => 'pending',
             ]);
+
+            // Reserve all seats
+            foreach ($seats as $seat) {
+                $price = $seat->trip->base_price;
+                if (in_array($seat->seat_number, [1, 2])) {
+                    $price *= 1.2;
+                }
+                $seat->update(['status' => 'reserved']);
+                $booking->bookingSeats()->create([
+                    'seat_id' => $seat->id,
+                    'price' => $price
+                ]);
+            }
+
+            // Atomic decrement
+            $trip->decrement('available_seats', count($seatIds));
+
+            Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Booking created successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
         }
-
-        Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
-
-        return redirect()->back()->with('success', 'Booking created successfully!');
     }
 }
