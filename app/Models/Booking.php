@@ -27,7 +27,7 @@ public function traveler()
     return $this->belongsTo(User::class, 'user_id');
 }
 
-    public function trips()
+    public function trip()
     {
         return $this->belongsTo(Trip::class);
     }

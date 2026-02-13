@@ -68,6 +68,6 @@ class BookingController extends Controller
 
         Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
 
-        return redirect()->back()->with('success', 'Booking created successfully!');
+        return redirect()->route('payment.show', $booking->id);
     }
-    }
+}
