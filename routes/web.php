@@ -21,7 +21,7 @@ Route::get('/home', function () {
 
 Route::get('/pending', function () {
     return view('auth.user_pending');
-});
+})->name('pending_validation');
 
 // Route::get('/taxi-info', function () {
 //     return view('auth.user_info');

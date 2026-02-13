@@ -1,6 +1,7 @@
 <nav
     class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-800/50 shadow-glass transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <a href="{{ route('home') }}">
         <div class="flex justify-between items-center h-20">
             <div class="flex items-center gap-3 group cursor-pointer">
                 <div class="relative w-10 h-10 flex items-center justify-center">
@@ -104,6 +105,7 @@
                     </div>
                 </div>
         </div>
+        </a>
 
 
     </div>
