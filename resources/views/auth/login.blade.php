@@ -151,7 +151,7 @@
                         </div>
                     </div>
                     <!-- Actions Row -->
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between mt-6">
                         <div class="flex items-center mt-2">
                             <input
                                 class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer"
@@ -172,7 +172,7 @@
                         </div>
                     </div>
                     <!-- Submit Button -->
-                    <div class="mt-2">
+                    <div class="mt-6">
                         <button
                             class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary shadow-lg shadow-primary/30 transition-all duration-200 ease-in-out transform hover:-translate-y-0.5"
                             type="submit">
@@ -218,7 +218,7 @@
                     </div>
                     <p class="mt-8 text-center text-sm text-gray-600 dark:text-gray-400">
                         Don't have an account?
-                        <a class="font-bold text-primary hover:text-primary-dark transition-colors" href="#">
+                        <a class="font-bold text-primary hover:text-primary-dark transition-colors" href="{{ route('register') }}">
                             Sign Up
                         </a>
                     </p>
