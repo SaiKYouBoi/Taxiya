@@ -27,6 +27,10 @@ Route::get('/pending', function () {
 //     return view('auth.user_info');
 // })->name('taxi-info');
 
+Route::get('/my-bookings', function () {
+    return view('travler.mybookings');
+});
+
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
