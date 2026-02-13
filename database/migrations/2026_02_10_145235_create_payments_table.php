@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('booking_id')->constrained('bookings')->cascadeOnDelete();
             $table->double('amount');
-            $table->enum('method',['card','cash']);
+            $table->enum('method',['credit','cash']);
             $table->timestamp('payment_date');
             $table->timestamps();
         });
