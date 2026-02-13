@@ -44,19 +44,12 @@ Route::get('/create-trip', function () {
 });
 
 
-
-
-
  Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
 Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
 ->name('mybookings.cancel');
 
 Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
     ->name('mybookings.index');
-
-
-
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
