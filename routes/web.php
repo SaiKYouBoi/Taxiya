@@ -32,6 +32,7 @@ Route::get('/my-bookings', function () {
 });
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
+Route::get('/search-trip/{id}', [SearchController::class, 'show'])->name('search.show');
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 

@@ -53,4 +53,11 @@ public function displaySearch(Request $request)
 
     $trips = $query->orderBy('departure_datetime', 'asc')->get();
     return view('travler.search_trip', compact('cities', 'trips'));
-}}
+}
+
+public function show($id)
+{
+    $trip = Trip::with(['departureCity', 'arrivalCity', 'taxi.driver', 'seats'])->findOrFail($id);
+    return view('travler.confirm_booking', compact('trip'));
+}
+}
