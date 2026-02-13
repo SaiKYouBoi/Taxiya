@@ -31,9 +31,8 @@ Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('tr
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
-Route::get('/payment', function () {
-    return view('travler.payment');
-});
+Route::get('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+Route::post('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
 
 Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
 

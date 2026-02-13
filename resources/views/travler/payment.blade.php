@@ -93,9 +93,11 @@
                 <div
                     class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 lg:p-8">
                     <h2 class="text-xl font-bold mb-6">Select Payment Method</h2>
-                    <form class="space-y-4">
+                    <form method="POST" action="{{ route('payment.store', $booking->id) }}" class="space-y-4">
+                        @csrf
+                        <input type="hidden" name="amount" value="{{ $booking->total_price }}">
                         <label class="cursor-pointer block group">
-                            <input checked="" class="payment-radio hidden" name="payment_method" type="radio" />
+                            <input checked="" class="payment-radio hidden" name="payment_method" value="card" type="radio" />
                             <div
                                 class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
                                 <div class="flex items-start gap-4">
@@ -228,14 +230,14 @@
                         <button
                             class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-lg py-4 px-6 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200 flex items-center justify-center gap-2 transform active:scale-[0.99]">
                             <span class="material-icons">lock</span>
-                            Confirm &amp; Pay 77.00 MAD
+                            Confirm &amp; Pay {{ $booking->total_price ?? '77.00' }} MAD
                         </button>
                         <div class="mt-4 flex justify-center items-center gap-4 grayscale opacity-50">
                             <div class="h-6 w-10 bg-slate-200 rounded"></div>
                             <div class="h-6 w-10 bg-slate-200 rounded"></div>
                             <div class="h-6 w-10 bg-slate-200 rounded"></div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
