@@ -43,6 +43,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'phone' => $request->phone,
             'role' => $request->role,
+            'is_validated' => $request->role === 'driver' ? false : true,
         ]);
 
         event(new Registered($user));

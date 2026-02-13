@@ -1,6 +1,7 @@
 <nav
     class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-800/50 shadow-glass transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <a href="{{ route('home') }}">
         <div class="flex justify-between items-center h-20">
             <div class="flex items-center gap-3 group cursor-pointer">
                 <div class="relative w-10 h-10 flex items-center justify-center">
@@ -22,13 +23,12 @@
                     </span>
                 </div>
             </div>
+            </a>
+
 
             @if (Route::has('login'))
                 @auth
                     <div class="flex items-center gap-0">
-
-                        <div class="h-6 w-[1px] bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
-
                         <div class="relative">
                             <img alt="User Profile Avatar"
                                 class="h-10 w-10 rounded-full object-cover ring-2 ring-white dark:ring-slate-800 shadow-md"
@@ -84,8 +84,9 @@
                                 href="{{ route('register') }}">
                                 Sign Up
                             </a>
-                        @endif
                         </div>
+                        @endif
+
                     @endauth
                     @endif
                     <!-- Hamburger -->
@@ -103,7 +104,8 @@
                         </button>
                     </div>
                 </div>
-        </div>
+    </div>
+
 
 
     </div>
