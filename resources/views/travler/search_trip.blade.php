@@ -214,7 +214,7 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                             {{ $trip->available_seats }} seats left
                         </span>
-                        <a href="{{ route('trips.show', $trip->id) }}
+                        <a href="{{ route('trips.show', $trip->id) }}"
                             class="w-full bg-brand-teal hover:bg-brand-dark-teal text-white font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2">
                             Book Now
                         </a>
