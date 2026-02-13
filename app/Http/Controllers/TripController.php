@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trip;
 use App\Models\City;
 use App\Models\Taxi;
+use App\Models\Trip;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TripController extends Controller
 {
