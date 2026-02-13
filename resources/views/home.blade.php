@@ -23,11 +23,11 @@
                         drivers. The modern way to travel traditionally.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button
+                        <a href="{{ route('trip.search') }}"
                             class="bg-primary hover:bg-primary-dark text-white text-lg font-semibold px-8 py-4 rounded-xl shadow-lg shadow-blue-600/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2">
-                            Find a Ride
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
+                                Find a Ride
+                                <span class="material-icons">arrow_forward</span>
+                            </a>
                         <button
                             class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 text-lg font-medium px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10">
                             <span class="material-icons">drive_eta</span>
