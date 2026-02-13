@@ -51,4 +51,6 @@ class Trip extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+
 }

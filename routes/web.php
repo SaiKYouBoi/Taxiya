@@ -48,6 +48,7 @@ Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 Route::get('/payment', function () {
     return view('travler.payment');
 });
+Route::get('/create-trip', [TripController::class, 'create'])->name('trips.create');
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
@@ -88,6 +89,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
+ Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
 
 });
 
