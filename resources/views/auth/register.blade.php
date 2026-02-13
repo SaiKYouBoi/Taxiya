@@ -82,10 +82,24 @@
                         </div>
                         <form method="POST" action="{{ route('register') }}" class="space-y-8">
                             @csrf
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                                    for="name">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="material-icons text-gray-400 text-sm">person</span>
+                                    </div>
+                                    <input
+                                        class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
+                                        id="full_name" placeholder="e.g. Youssef El Amrani" type="text" name="name"
+                                        :value="old('name')" required autofocus autocomplete="name" />
+                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                </div>
+                            </div>
                             <div class="space-y-4">
                                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">I am
                                     a...</label>
-                                <input type="hidden" name="role" id="selected-role" value="traveler">
+                                <input type="hidden" name="role" id="selected-role" value="">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <label class="relative cursor-pointer group role-option" data-role="traveler">
                                         <div
@@ -126,20 +140,9 @@
                                         </div>
                                     </label>
                                 </div>
+                                <x-input-error :messages="$errors->get('role')" class="mt-2" />
                             </div>
-                            <div
-                                class="mt-4 peer-checked/driver:block bg-blue-50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-800 rounded-lg p-4 flex gap-3">
-                                <span class="material-icons text-blue-600 dark:text-blue-400 shrink-0">info</span>
-                                <div>
-                                    <h4 class="text-sm font-bold text-blue-900 dark:text-blue-300">Pending Admin
-                                        Validation
-                                    </h4>
-                                    <p class="text-xs text-blue-700 dark:text-blue-400 mt-0.5">
-                                        Driver accounts require manual verification of documents (Permit, License,
-                                        Insurance). You can complete your profile now, but activation takes 24-48 hours.
-                                    </p>
-                                </div>
-                            </div>
+
                             <div
                                 class="mt-4 bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-800 rounded-lg p-4 flex gap-3">
                                 <span
@@ -158,21 +161,7 @@
                                 <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-4">Personal Details
                                 </h3>
                                 <div class="grid grid-cols-1 gap-6">
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
-                                            for="name">Full Name</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                                <span class="material-icons text-gray-400 text-sm">person</span>
-                                            </div>
-                                            <input
-                                                class="w-full rounded-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5 pl-10"
-                                                id="full_name" placeholder="e.g. Youssef El Amrani" type="text"
-                                                name="name" :value="old('name')" required autofocus
-                                                autocomplete="name" />
-                                        </div>
-                                    </div>
+
                                     <div>
                                         <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
                                             for="email">Email Address</label>
@@ -231,8 +220,10 @@
                                             </div>
                                             <input
                                                 class="flex-1 rounded-r-lg border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm focus:border-primary focus:ring focus:ring-primary/20 transition-all py-2.5"
-                                                id="phone" name="phone" placeholder="6 00 00 00 00" type="tel" />
+                                                :value="old('phone')" id="phone" name="phone"
+                                                placeholder="6 00 00 00 00" type="tel" />
                                         </div>
+                                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                     </div>
                                 </div>
                             </div>
