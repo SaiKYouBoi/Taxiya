@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+<<<<<<< HEAD
     public function DriverBookings(){
         $driver = auth()->user()->load(['taxi.trips.bookings.traveler']);
 
@@ -93,3 +94,11 @@ class BookingController extends Controller
         }
     }
 }
+=======
+
+ 
+
+
+
+}
+>>>>>>> 146ce31 (Added bookings controller changes to match bookings logic)

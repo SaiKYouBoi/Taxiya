@@ -44,17 +44,49 @@ Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 Route::get('/payment', function () {
     return view('travler.payment');
 });
-
-Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-
-Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
 
+<<<<<<< HEAD
 Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
+=======
+
+Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+
+Route::post('/Mybookings/{id}/cancel', [MyBookingController::class, 'cancel'])->name('mybookings.cancel');
+
+
+// @if($booking->status !== 'cancelled')
+//     <form action="{{ route('mybookings.cancel', $booking->id) }}" method="POST"
+//           onsubmit="return confirm('Êtes-vous sûr de vouloir annuler votre réservation ?')">
+//         @csrf
+//         @method('PATCH')
+
+//         <button type="submit"
+//                 class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg font-medium transition-all">
+//             <span class="material-icons-outlined text-sm">close</span>
+//             Annuler ma place
+//         </button>
+//     </form>
+// @else
+//     <span class="text-gray-400 italic text-sm">Cette réservation est annulée</span>
+// @endif
+
+
+// @php
+//     $departureTime = \Carbon\Carbon::parse($booking->trip->date_time);
+//     $canCancel = now()->diffInHours($departureTime, false) >= 24;
+// @endphp
+
+// @if($booking->status !== 'cancelled' && $canCancel)
+//     @elseif($booking->status !== 'cancelled' && !$canCancel)
+//     <span class="text-orange-500 text-xs">Annulation non autorisée (-24h)</span>
+// @endif
+
+
+>>>>>>> 146ce31 (Added bookings controller changes to match bookings logic)
 
 Route::get('/dashboard', function () {
     return view('dashboard');
