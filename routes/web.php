@@ -55,6 +55,20 @@ Route::get('/create-trip', function () {
 Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
+
+
+
+ Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
+
+
+
+
+
 Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
 Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
 ->name('mybookings.cancel');
@@ -73,6 +87,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+
 });
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])
@@ -82,3 +98,4 @@ Route::post('taxi-info', [VehicleRegistration::class, 'store']);
 
 
 require __DIR__.'/auth.php';
+
