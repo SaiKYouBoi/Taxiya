@@ -5,8 +5,7 @@
         <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">TaxiYa</span>
     </div>
     <div class="flex items-center gap-6">
-        <a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 transition-colors hidden sm:block"
-            href="#">Already have an account? Log in</a>
+        
         <a class="flex items-center gap-1 text-sm font-medium text-primary hover:text-primary-dark transition-colors"
             href="#">
             <span class="material-icons text-base">help_outline</span>
