@@ -6,12 +6,15 @@ use App\Models\City;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 
-class SearchController extends Controller
+class searchController extends Controller
 {
 public function displaySearch(Request $request)
 {
     $cities = City::all();
-    // dd($request->departure_city_id);
+
+    // If no search parameters, just show the search form
+    if (!$request->hasAny(['departure_city_id', 'arrival_city_id', 'date', 'seats']))
+        return view('travler.search_trip', ['cities' => $cities, 'trips' => collect([])]);
 
     $validated = $request->validate(
     [
@@ -29,10 +32,8 @@ public function displaySearch(Request $request)
     ]);
 
     $query = Trip::with(['departureCity', 'arrivalCity', 'taxi.Driver']);
-    // dd($query);
 
     $query->where('status', 'waiting');
-    // enum('waiting','ongoing','completed','cancelled')
     $query->where('departure_city_id', $request->departure_city_id);
     $query->where('arrival_city_id', $request->arrival_city_id);
     $query->whereDate('departure_datetime', $request->date);
@@ -41,7 +42,6 @@ public function displaySearch(Request $request)
         $query->where('base_price', '>=', $request->min_price);
     if ($request->filled('max_price'))
         $query->where('base_price', '<=', $request->max_price);
-    $trips = $query->orderBy('departure_datetime', 'asc')->get();
 
     if ($request->filled('premium_only')) {
         $query->whereHas('seats', function($q)
@@ -50,5 +50,7 @@ public function displaySearch(Request $request)
               ->where('status', 'available');
         }, '>=', $request->seats);
     }
+
+    $trips = $query->orderBy('departure_datetime', 'asc')->get();
     return view('travler.search_trip', compact('cities', 'trips'));
 }}
