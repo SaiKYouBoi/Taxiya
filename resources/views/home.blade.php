@@ -33,6 +33,7 @@
                             <span class="material-icons">drive_eta</span>
                             Become a Driver
                         </button>
+                        </a>
                     </div>
                     <div class="mt-12 flex items-center gap-6 text-sm text-slate-200 font-medium">
                         <div class="flex items-center gap-2 drop-shadow-md">

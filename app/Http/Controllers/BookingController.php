@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
-    public function DriverBookings(){
+    public function DriverBookings()
+    {
         $driver = auth()->user()->load(['taxi.trips.bookings.traveler']);
 
         $trips = $driver->taxi ? $driver->taxi->trips : collect();

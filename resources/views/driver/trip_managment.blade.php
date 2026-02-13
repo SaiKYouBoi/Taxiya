@@ -60,7 +60,8 @@
         class="w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-700 flex flex-col fixed h-full z-10 transition-colors duration-200 lg:flex">
         <!-- Logo Area -->
         <div class="p-6 flex items-center gap-3">
-            <div class="h-10 w-10 bg-primary rounded-lg flex items-center justify-center text-white relative shadow-sm overflow-hidden">
+            <div
+                class="h-10 w-10 bg-primary rounded-lg flex items-center justify-center text-white relative shadow-sm overflow-hidden">
                 <span class="material-symbols-outlined text-2xl relative z-10">local_taxi</span>
                 <div class="absolute inset-0 bg-white/20 transform skew-x-12 -translate-x-4"></div>
             </div>
@@ -73,8 +74,10 @@
                     data-alt="Portrait of taxi driver Ahmed Benali"
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR_lIfA0UFJtZ_7oieMr-YRXIJ35Bkp-fvFvHcWOegNX-6xKz0JOJ_2jvnBumgM_WhOfPVhUoIIdXUniMRjl14Xyx9NYJXkQOMKADoEhk24RodWsnUW_LG_AENK948YdVaBAs4qgEV7wikE46oe44zQvk9InA3yHrd4wQfofYGrs9u1zrS4iIu6XFtN6L9cV7hLNtcE5w96qYcIgYVwUb8WOQprknOl5bMZBPqRWcDyi17UJyPkYyBZqsBlcAUg-VchwLcXY32pQ" />
                 <div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white">{{auth()->user()->name ?? 'quest'}}</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ auth()->user()->taxi?->model ?? 'NO taxi Assigned'}}</p>
+                    <h3 class="font-bold text-sm text-gray-900 dark:text-white">{{ auth()->user()->name ?? 'quest' }}
+                    </h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                        {{ auth()->user()->taxi?->model ?? 'NO taxi Assigned' }}</p>
                 </div>
             </div>
             <!-- Quick Stats -->
@@ -125,13 +128,16 @@
             </a>
         </nav>
         <!-- Logout -->
-        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
-                href="#">
-                <span class="material-icons-outlined">logout</span>
-                <span class="font-medium">Log Out</span>
-            </a>
-        </div>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+                <button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                    type="submit">
+                    <span class="material-icons-outlined">logout</span>
+                    <span class="font-medium">Log Out</span>
+                </button>
+            </div>
+        </form>
     </aside>
     <!-- Mobile Header (Visible only on small screens) -->
     <header
@@ -191,62 +197,71 @@
         </div>
         <!-- Trips List -->
         <div class="flex flex-col gap-4">
-                @forelse($trips as $trip)
-        <div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            @forelse($trips as $trip)
+                <div
+                    class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
-                <!-- Time & Date -->
-                <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
-                    <div class="text-2xl font-bold text-gray-900 dark:text-white">
-                        {{ \Carbon\Carbon::parse($trip->date_time)->format('H:i') }}
-                    </div>
-                    <div class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
-                        {{ \Carbon\Carbon::parse($trip->date_time)->isToday() ? 'Today' : \Carbon\Carbon::parse($trip->date_time)->format('d M') }}
-                    </div>
-                </div>
+                        <!-- Time & Date -->
+                        <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                            <div class="text-2xl font-bold text-gray-900 dark:text-white">
+                                {{ \Carbon\Carbon::parse($trip->date_time)->format('H:i') }}
+                            </div>
+                            <div
+                                class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
+                                {{ \Carbon\Carbon::parse($trip->date_time)->isToday() ? 'Today' : \Carbon\Carbon::parse($trip->date_time)->format('d M') }}
+                            </div>
+                        </div>
 
-                <!-- Route -->
-                <div class="flex-1 flex flex-col gap-2">
-                    <div class="flex items-center gap-4">
-                        <div class="flex-1 flex flex-col justify-between h-[60px] py-1">
-                            <div>
-                                <span class="text-xs text-gray-400 block mb-0.5">Start</span>
-                                <h3 class="font-bold text-gray-700 dark:text-gray-200">{{ $trip->departureCity->name }}</h3>
+                        <!-- Route -->
+                        <div class="flex-1 flex flex-col gap-2">
+                            <div class="flex items-center gap-4">
+                                <div class="flex-1 flex flex-col justify-between h-[60px] py-1">
+                                    <div>
+                                        <span class="text-xs text-gray-400 block mb-0.5">Start</span>
+                                        <h3 class="font-bold text-gray-700 dark:text-gray-200">
+                                            {{ $trip->departureCity->name }}</h3>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-gray-400 block mb-0.5">Destination</span>
+                                        <h3 class="font-bold text-gray-900 dark:text-white">
+                                            {{ $trip->arrivalCity->name }}</h3>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <span class="text-xs text-gray-400 block mb-0.5">Destination</span>
-                                <h3 class="font-bold text-gray-900 dark:text-white">{{ $trip->arrivalCity->name }}</h3>
+                        </div>
+
+                        <!-- Occupancy -->
+                        <div
+                            class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
+                            <div class="flex justify-between items-end mb-2">
+                                <span
+                                    class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Occupancy</span>
+                                <span class="text-lg font-bold text-primary">
+                                    {{ $trip->bookings->sum('seats_count') }}<span
+                                        class="text-gray-400 text-sm">/6</span>
+                                </span>
                             </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
+                                <div class="bg-primary h-full rounded-full"
+                                    style="width: {{ ($trip->bookings->sum('seats_count') / 6) * 100 }}%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
+                            <button
+                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg shadow-md hover:bg-blue-600 transition-colors">
+                                View Details
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <!-- Occupancy -->
-                <div class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
-                    <div class="flex justify-between items-end mb-2">
-                        <span class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Occupancy</span>
-                        <span class="text-lg font-bold text-primary">
-                            {{ $trip->bookings->sum('seats_count') }}<span class="text-gray-400 text-sm">/6</span>
-                        </span>
-                    </div>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
-                        <div class="bg-primary h-full rounded-full" style="width: {{ ($trip->bookings->sum('seats_count') / 6) * 100 }}%"></div>
-                    </div>
+            @empty
+                <div class="text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
+                    <p class="text-gray-500">Vous n'avez pas encore créé de trajets.</p>
                 </div>
-
-                <!-- Actions -->
-                <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
-                    <button class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg shadow-md hover:bg-blue-600 transition-colors">
-                        View Details
-                    </button>
-                </div>
-            </div>
-        </div>
-    @empty
-        <div class="text-center py-10 bg-white rounded-xl border border-dashed border-gray-300">
-            <p class="text-gray-500">Vous n'avez pas encore créé de trajets.</p>
-        </div>
-    @endforelse
+            @endforelse
             <!-- Trip Card 1 (Active/Today) -->
             <!-- <div
                 class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">

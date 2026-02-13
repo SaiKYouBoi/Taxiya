@@ -26,6 +26,7 @@ class User extends Authenticatable
         'password',
         'phone',
         'role',
+        'is_validated',
     ];
 
     /**
@@ -58,7 +59,7 @@ class User extends Authenticatable
 
     public function bookings()
     {
-        return $this->hasMany(Booking::class, 'traveler_id');
+        return $this->hasMany(Booking::class, 'user_id');
     }
 
     public function reviews()
