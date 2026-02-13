@@ -1,31 +1,31 @@
 <?php
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user', function () {
-    return view('auth.login_user');
-});
+// Route::get('/user', function () {
+//     return view('auth.login_user');
+// });
 
 Route::get('/pending', function () {
     return view('auth.user_pending');
 });
 
-Route::get('/userinfo', function () {
+Route::get('/dashboard-info', function () {
     return view('auth.user_info');
-});
+})->name('driver-dashboard');
 
 Route::get('/search-trip', function () {
     return view('travler.search_trip');
 });
 
-Route::get('/confirm-booking', function () {
-    return view('travler.confirm_booking');
-});
+Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
 Route::get('/payment', function () {
     return view('travler.payment');

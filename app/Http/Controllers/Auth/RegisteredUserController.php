@@ -31,19 +31,27 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'string', 'max:20', 'unique:' . User::class],
+            'role' => ['required', 'in:traveler,driver'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'role' => $request->role,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
+
+        if ($user->role == 'driver') {
+            return redirect(route('driver-dashboard', absolute: false));
+        }
 
         return redirect(route('dashboard', absolute: false));
     }
