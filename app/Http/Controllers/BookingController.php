@@ -9,10 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
 =======
 use Illuminate\Support\Str;
 >>>>>>> bc59522 (Sync: ajout méthode DriverBookings au BookingController)
+=======
+use Illuminate\Support\Facades\DB;
+>>>>>>> 690a481 (Atomic seat reservation: DB transaction, lockForUpdate, available_seats check et decrement)
 
 class BookingController extends Controller
 {
@@ -97,6 +101,7 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
 }
 =======
@@ -112,6 +117,8 @@ class BookingController extends Controller
         Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
 
         return redirect()->back()->with('success', 'Booking created successfully!');
+=======
+>>>>>>> 690a481 (Atomic seat reservation: DB transaction, lockForUpdate, available_seats check et decrement)
     }
 }
 >>>>>>> bc59522 (Sync: ajout méthode DriverBookings au BookingController)
