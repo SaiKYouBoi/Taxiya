@@ -11,7 +11,7 @@ class TaxiSeeder extends Seeder
     public function run(): void
     {
         $drivers = User::where('role', 'driver')->get();
-        
+
         $taxiData = [
             ['license_plate' => '12345|A|44', 'model' => 'Mercedes 240D', 'vehicule_make' => 'Mercedes-Benz', 'year' => '1985'],
             ['license_plate' => '23456|B|20', 'model' => 'Peugeot 505', 'vehicule_make' => 'Peugeot', 'year' => '1990'],
