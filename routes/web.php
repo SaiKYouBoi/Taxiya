@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Admin\DriverValidationController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
@@ -23,6 +25,7 @@ Route::get('/pending', function () {
     return view('auth.user_pending');
 })->name('pending_validation');
 
+
 // Route::get('/taxi-info', function () {
 //     return view('auth.user_info');
 // })->name('taxi-info');
@@ -32,6 +35,9 @@ Route::get('/my-bookings', function () {
 });
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
+
+Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
+
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
@@ -46,6 +52,7 @@ Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
+
 Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
