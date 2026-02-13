@@ -50,9 +50,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ($user->role == 'driver') {
-            return redirect(route('driver-dashboard', absolute: false));
+            return redirect(route('taxi-info', absolute: false));
         }
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('home', absolute: false));
     }
 }
