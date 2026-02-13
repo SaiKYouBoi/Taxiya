@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingConfirmation;
 use App\Models\Booking;
 use App\Models\Seat;
-use App\Mail\BookingConfirmation;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
     public function DriverBookings(){
-     $driver = auth()->user()->load(['taxi.trips.bookings.traveler']);
+        $driver = auth()->user()->load(['taxi.trips.bookings.traveler']);
 
-     $trips = $driver->taxi ? $driver->taxi->trips : collect();
+        $trips = $driver->taxi ? $driver->taxi->trips : collect();
 
-    return view('driver.bookings', compact('trips'));
-     }
+        return view('driver.bookings', compact('trips'));
+    }
     public function store(Request $request)
     {
         $seatIds = json_decode($request->seat_ids, true);
@@ -70,4 +71,4 @@ class BookingController extends Controller
 
         return redirect()->back()->with('success', 'Booking created successfully!');
     }
-    }
+}
