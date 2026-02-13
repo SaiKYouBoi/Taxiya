@@ -17,7 +17,7 @@ class PaymentController extends Controller
     public function store(Request $request, $bookingId)
     {
         $validated = $request->validate([
-            'payment_method' => 'required|in:card,cash',
+            'payment_method' => 'required|in:credit,cash',
             'amount' => 'required|numeric|min:0',
         ]);
 
@@ -32,6 +32,6 @@ class PaymentController extends Controller
 
         $booking->update(['status' => 'confirmed']);
 
-        return redirect()->route('booking.success')->with('success', 'Payment completed successfully!');
+        return redirect()->route('home')->with('success', 'Payment completed successfully!');
     }
 }

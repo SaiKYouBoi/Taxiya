@@ -97,7 +97,7 @@
                         @csrf
                         <input type="hidden" name="amount" value="{{ $booking->total_price }}">
                         <label class="cursor-pointer block group">
-                            <input checked="" class="payment-radio hidden" name="payment_method" value="card" type="radio" />
+                            <input checked="" class="payment-radio hidden" name="payment_method" value="credit" type="radio" onclick="document.getElementById('card-fields').style.display='block'" />
                             <div
                                 class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
                                 <div class="flex items-start gap-4">
@@ -106,8 +106,7 @@
                                     </div>
                                     <div class="flex-grow">
                                         <div class="flex justify-between items-center mb-1">
-                                            <span class="font-bold text-slate-900 dark:text-white">Credit or Debit
-                                                Card</span>
+                                            <span class="font-bold text-slate-900 dark:text-white">Credit Card</span>
                                             <div class="flex gap-1">
                                                 <div
                                                     class="h-6 w-10 bg-slate-100 rounded border border-slate-200 flex items-center justify-center text-[8px] font-bold text-slate-500">
@@ -117,50 +116,25 @@
                                                     MC</div>
                                             </div>
                                         </div>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Pay securely with your
-                                            bank card.</p>
-                                        <div class="space-y-4 mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Pay securely with your credit card.</p>
+                                        <div id="card-fields" class="space-y-4 mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
                                             <div>
-                                                <label
-                                                    class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Card
-                                                    Number</label>
-                                                <div class="relative">
-                                                    <input
-                                                        class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary pl-10"
-                                                        placeholder="0000 0000 0000 0000" type="text" />
-                                                    <span
-                                                        class="material-icons absolute left-3 top-2.5 text-slate-400 text-sm">credit_card</span>
-                                                </div>
+                                                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Card Number</label>
+                                                <input name="card_number" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="0000 0000 0000 0000" type="text" />
                                             </div>
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
-                                                    <label
-                                                        class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Expiry
-                                                        Date</label>
-                                                    <input
-                                                        class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary"
-                                                        placeholder="MM / YY" type="text" />
+                                                    <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Expiry Date</label>
+                                                    <input name="expiry" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="MM/YY" type="text" />
                                                 </div>
                                                 <div>
-                                                    <label
-                                                        class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">CVC
-                                                        / CVV</label>
-                                                    <div class="relative">
-                                                        <input
-                                                            class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary"
-                                                            placeholder="123" type="text" />
-                                                        <span
-                                                            class="material-icons absolute right-3 top-2.5 text-slate-400 text-sm cursor-help">help_outline</span>
-                                                    </div>
+                                                    <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">CVV</label>
+                                                    <input name="cvv" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="123" type="text" />
                                                 </div>
                                             </div>
                                             <div>
-                                                <label
-                                                    class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Cardholder
-                                                    Name</label>
-                                                <input
-                                                    class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm focus:ring-primary focus:border-primary"
-                                                    placeholder="Name on card" type="text" />
+                                                <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Cardholder Name</label>
+                                                <input name="cardholder" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="Name on card" type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +142,7 @@
                             </div>
                         </label>
                         <label class="cursor-pointer block group">
-                            <input class="payment-radio hidden" name="payment_method" type="radio" />
+                            <input class="payment-radio hidden" name="payment_method" value="cash" type="radio" onclick="document.getElementById('card-fields').style.display='none'" />
                             <div
                                 class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
                                 <div class="flex items-start gap-4">
@@ -177,45 +151,14 @@
                                     </div>
                                     <div class="flex-grow">
                                         <div class="flex justify-between items-center mb-1">
-                                            <span class="font-bold text-slate-900 dark:text-white">TaxiYa Wallet</span>
-                                            <span
-                                                class="bg-primary/10 text-primary text-xs font-bold px-2 py-0.5 rounded">Balance:
-                                                45.00 MAD</span>
-                                        </div>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400">Use your prepaid balance for
-                                            faster checkout.</p>
-                                        <p class="text-xs text-red-500 mt-2 flex items-center gap-1">
-                                            <span class="material-icons text-xs">error_outline</span>
-                                            Insufficient balance. Please top up or choose another method.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                        <label class="cursor-pointer block group">
-                            <input class="payment-radio hidden" name="payment_method" type="radio" />
-                            <div
-                                class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
-                                <div class="flex items-start gap-4">
-                                    <div
-                                        class="radio-circle w-5 h-5 rounded-full border border-slate-300 dark:border-slate-600 flex-shrink-0 mt-1 transition-all">
-                                    </div>
-                                    <div class="flex-grow">
-                                        <div class="flex justify-between items-center mb-1">
-                                            <span class="font-bold text-slate-900 dark:text-white">Cash on Arrival</span>
+                                            <span class="font-bold text-slate-900 dark:text-white">Cash</span>
                                             <span class="material-icons text-green-600">payments</span>
                                         </div>
-                                        <p class="text-sm text-slate-500 dark:text-slate-400">Pay directly to the driver
-                                            when you reach the station.</p>
-                                        <div
-                                            class="mt-2 text-xs bg-orange-50 dark:bg-orange-900/10 text-orange-800 dark:text-orange-400 p-2 rounded inline-block">
-                                            Note: Seat reservation is held for 15 mins before departure.
-                                        </div>
+                                        <p class="text-sm text-slate-500 dark:text-slate-400">Pay with cash to the driver.</p>
                                     </div>
                                 </div>
                             </div>
                         </label>
-                    </form>
                     <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
                         <div class="flex items-start gap-3 mb-6">
                             <input
@@ -227,16 +170,11 @@
                                 understand that front seats are non-refundable within 2 hours of departure.
                             </label>
                         </div>
-                        <button
+                        <button type="submit"
                             class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-lg py-4 px-6 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200 flex items-center justify-center gap-2 transform active:scale-[0.99]">
                             <span class="material-icons">lock</span>
                             Confirm &amp; Pay {{ $booking->total_price ?? '77.00' }} MAD
                         </button>
-                        <div class="mt-4 flex justify-center items-center gap-4 grayscale opacity-50">
-                            <div class="h-6 w-10 bg-slate-200 rounded"></div>
-                            <div class="h-6 w-10 bg-slate-200 rounded"></div>
-                            <div class="h-6 w-10 bg-slate-200 rounded"></div>
-                        </div>
                     </form>
                 </div>
             </div>
