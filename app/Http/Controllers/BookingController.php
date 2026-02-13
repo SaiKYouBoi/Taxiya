@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class BookingController extends Controller
 {
     public function DriverBookings(){
@@ -92,4 +92,9 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
         }
     }
+
+
+
+
+
 }

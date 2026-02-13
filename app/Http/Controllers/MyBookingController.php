@@ -23,8 +23,9 @@ class MyBookingController extends Controller
 
      $booking->status = 'cancelled';
     $booking->save();
+    $seatsCount = $booking->bookingSeats()->count();
 
-     $booking->trip->increment('available_seats', $booking->seats_count);
+     $booking->trip->increment('available_seats', $seatsCount);
 
      if($booking->payment) {
         $booking->payment->update(['status' => 'refunded',
@@ -35,18 +36,35 @@ class MyBookingController extends Controller
     return back()->with('success', 'Votre réservation a été annulée.');
 }
 
-    public function myBookings(Request $request){
-          if (!auth()->check()) {
+
+
+
+    public function myBookings(Request $request) {
+    if (!auth()->check()) {
         return redirect()->route('login');
     }
-        $bookings = auth()->user()
-        ->bookings()
-        ->with('trip')
-        ->latest()
-        ->get();
+
+     $query = auth()->user()->bookings()
+     ->with(['trip.taxi.driver', 'trip.departureCity', 'trip.arrivalCity']);
+     if ($request->has('status')) {
+        $status = $request->status;
+        if ($status == 'upcoming') {
+             $query->where('status', 'confirmed')
+                  ->whereHas('trip', function($q) {
+                      $q->where('departure_datetime', '>', now());
+                  });
+        } elseif ($status == 'completed') {
+             $query->where('status', 'confirmed')
+                  ->whereHas('trip', function($q) {
+                      $q->where('departure_datetime', '<=', now());
+                  });
+        } elseif ($status == 'cancelled') {
+             $query->where('status', 'cancelled');
+        }
+    }
+
+    $bookings = $query->latest()->get();
 
     return view('travler.mybookings', compact('bookings'));
-
-
-    }
+}
 }

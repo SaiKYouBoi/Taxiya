@@ -34,22 +34,15 @@ Route::get('/pending', function () {
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
-Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
+Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show');
+Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
 Route::get('/payment', function () {
     return view('travler.payment');
 });
-Route::get('/create-trip', function () {
-    return view('driver.create_trip');
-});
+Route::get('/create-trip', [TripController::class, 'create'])->name('trips.create');
 
 
- Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
-->name('mybookings.cancel');
-
-Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
-    ->name('mybookings.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -62,6 +55,12 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
+ Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
 
 });
 
