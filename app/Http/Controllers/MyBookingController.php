@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Booking;
+use Carbon\Carbon;
 
 class MyBookingController extends Controller
 {
         public function cancelBooking($id)
 {
      $booking = Booking::where('id', $id)
-                      ->where('traveler_id', auth()->id())
+                      ->where('user_id', auth()->id())
                       ->firstOrFail();
 
     $now = Carbon::now();
@@ -34,6 +36,9 @@ class MyBookingController extends Controller
 }
 
     public function myBookings(Request $request){
+          if (!auth()->check()) {
+        return redirect()->route('login');
+    }
         $bookings = auth()->user()
         ->bookings()
         ->with('trip')

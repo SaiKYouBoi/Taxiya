@@ -47,6 +47,13 @@ Route::get('/create-trip', function () {
 
 
 
+ Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
+
 
 
 
@@ -61,13 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
 
-Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
-->name('mybookings.cancel');
-
-Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
-    ->name('mybookings.index');
 
 });
 
