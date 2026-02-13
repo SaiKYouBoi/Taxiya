@@ -36,6 +36,7 @@ Route::get('/pending', function () {
 
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
+Route::get('/search-trip/{id}', [SearchController::class, 'show'])->name('search.show');
 
 Route::post('/drivers/{driver}/approve', [DriverValidationController::class, 'approve'])
     ->name('drivers.approve');
@@ -44,6 +45,13 @@ Route::post('/drivers/{driver}/reject', [DriverValidationController::class, 'rej
     ->name('drivers.reject');
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
+
+Route::get('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+Route::post('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
+
+Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+
+Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
 Route::get('/payment', function () {
     return view('travler.payment');
@@ -96,7 +104,10 @@ Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooki
 Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
     ->name('mybookings.index');
 
-});
+    });
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
+    
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])
     ->name('taxi-info');
