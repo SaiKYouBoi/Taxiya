@@ -6,6 +6,7 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Auth\VehicleRegistration;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MyBookingController;
 
 Route::get('/', function () {
     return view('home');
@@ -27,9 +28,9 @@ Route::get('/pending', function () {
 //     return view('auth.user_info');
 // })->name('taxi-info');
 
-Route::get('/my-bookings', function () {
-    return view('travler.mybookings');
-});
+
+
+
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
@@ -38,16 +39,24 @@ Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 Route::get('/payment', function () {
     return view('travler.payment');
 });
-
-Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-
-Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-
 Route::get('/create-trip', function () {
     return view('driver.create_trip');
 });
-Route::get('/create-trip', [TripController::class, 'create']);
-Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
+
+
+
+
+
+ Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
+
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -59,6 +68,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+
 });
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])
@@ -67,3 +78,4 @@ Route::get('taxi-info', [VehicleRegistration::class, 'create'])
 Route::post('taxi-info', [VehicleRegistration::class, 'store']);
 
 require __DIR__.'/auth.php';
+
