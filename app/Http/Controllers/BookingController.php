@@ -9,14 +9,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
-
 
 class BookingController extends Controller
 {
-
-    public function DriverBookings(){
+    public function DriverBookings()
+    {
         $driver = auth()->user()->load(['taxi.trips.bookings.traveler']);
 
         $trips = $driver->taxi ? $driver->taxi->trips : collect();
@@ -95,11 +92,5 @@ class BookingController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
         }
-
-        Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
-
-        return redirect()->back()->with('success', 'Booking created successfully!');
-
-        }
-
+    }
 }
