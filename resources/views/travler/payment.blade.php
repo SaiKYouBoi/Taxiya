@@ -58,27 +58,14 @@
                     </h2>
                     <div class="space-y-3 mb-6">
                         <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
-                            <span>Base Fare (1 Seat)</span>
-                            <span class="font-medium">60.00 MAD</span>
-                        </div>
-                        <div
-                            class="flex justify-between items-center text-sm bg-yellow-50 dark:bg-yellow-900/10 p-2 -mx-2 rounded border border-yellow-100 dark:border-yellow-900/30">
-                            <div class="flex items-center gap-2">
-                                <span class="material-icons text-yellow-600 text-xs">star</span>
-                                <span class="text-yellow-800 dark:text-yellow-400 font-medium">Front Seat Surcharge
-                                    (+20%)</span>
-                            </div>
-                            <span class="font-bold text-yellow-800 dark:text-yellow-400">+12.00 MAD</span>
-                        </div>
-                        <div class="flex justify-between text-sm text-slate-600 dark:text-slate-400">
-                            <span>Service Fee</span>
-                            <span class="font-medium">5.00 MAD</span>
+                            <span>Base Fare ({{ $booking->seats->count() }} Seat{{ $booking->seats->count() > 1 ? 's' : '' }})</span>
+                            <span class="font-medium">{{ number_format($booking->total_price, 2) }} MAD</span>
                         </div>
                     </div>
                     <div class="border-t border-dashed border-slate-300 dark:border-slate-700 my-4 pt-4">
                         <div class="flex justify-between items-end">
                             <span class="text-base font-bold text-slate-700 dark:text-slate-300">Total Amount</span>
-                            <span class="text-3xl font-bold text-primary">77.00 <span
+                            <span class="text-3xl font-bold text-primary">{{ number_format($booking->total_price, 2) }} <span
                                     class="text-sm font-normal text-slate-500">MAD</span></span>
                         </div>
                     </div>
@@ -97,7 +84,7 @@
                         @csrf
                         <input type="hidden" name="amount" value="{{ $booking->total_price }}">
                         <label class="cursor-pointer block group">
-                            <input checked="" class="payment-radio hidden" name="payment_method" value="credit" type="radio" onclick="document.getElementById('card-fields').style.display='block'" />
+                            <input checked="" class="payment-radio hidden" name="payment_method" value="credit" type="radio" onclick="toggleCardFields(true)" />
                             <div
                                 class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
                                 <div class="flex items-start gap-4">
@@ -120,21 +107,21 @@
                                         <div id="card-fields" class="space-y-4 mt-4 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
                                             <div>
                                                 <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Card Number</label>
-                                                <input name="card_number" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="0000 0000 0000 0000" type="text" />
+                                                <input id="card_number" name="card_number" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="0000 0000 0000 0000" type="text" />
                                             </div>
                                             <div class="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Expiry Date</label>
-                                                    <input name="expiry" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="MM/YY" type="text" />
+                                                    <input id="expiry" name="expiry" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="MM/YY" type="text" />
                                                 </div>
                                                 <div>
                                                     <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">CVV</label>
-                                                    <input name="cvv" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="123" type="text" />
+                                                    <input id="cvv" name="cvv" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="123" type="text" />
                                                 </div>
                                             </div>
                                             <div>
                                                 <label class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Cardholder Name</label>
-                                                <input name="cardholder" required class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="Name on card" type="text" />
+                                                <input id="cardholder" name="cardholder" class="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg px-3 py-2 text-sm" placeholder="Name on card" type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +129,7 @@
                             </div>
                         </label>
                         <label class="cursor-pointer block group">
-                            <input class="payment-radio hidden" name="payment_method" value="cash" type="radio" onclick="document.getElementById('card-fields').style.display='none'" />
+                            <input class="payment-radio hidden" name="payment_method" value="cash" type="radio" onclick="toggleCardFields(false)" />
                             <div
                                 class="border border-slate-200 dark:border-slate-700 rounded-xl p-4 transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-700">
                                 <div class="flex items-start gap-4">
@@ -173,11 +160,26 @@
                         <button type="submit"
                             class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-lg py-4 px-6 rounded-xl shadow-lg shadow-blue-500/30 transition-all duration-200 flex items-center justify-center gap-2 transform active:scale-[0.99]">
                             <span class="material-icons">lock</span>
-                            Confirm &amp; Pay {{ $booking->total_price ?? '77.00' }} MAD
+                            Confirm &amp; Pay {{ number_format($booking->total_price, 2) }} MAD
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </main>
+    <script>
+    function toggleCardFields(show) {
+        const fields = ['card_number', 'expiry', 'cvv', 'cardholder'];
+        fields.forEach(id => {
+            const field = document.getElementById(id);
+            if (show) {
+                field.required = true;
+                document.getElementById('card-fields').style.display = 'block';
+            } else {
+                field.required = false;
+                document.getElementById('card-fields').style.display = 'none';
+            }
+        });
+    }
+    </script>
 @endsection

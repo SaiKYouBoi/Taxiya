@@ -16,10 +16,19 @@ class PaymentController extends Controller
 
     public function store(Request $request, $bookingId)
     {
-        $validated = $request->validate([
+        $rules = [
             'payment_method' => 'required|in:credit,cash',
             'amount' => 'required|numeric|min:0',
-        ]);
+        ];
+
+        if ($request->payment_method === 'credit') {
+            $rules['card_number'] = 'required';
+            $rules['expiry'] = 'required';
+            $rules['cvv'] = 'required';
+            $rules['cardholder'] = 'required';
+        }
+
+        $validated = $request->validate($rules);
 
         $booking = Booking::findOrFail($bookingId);
 
