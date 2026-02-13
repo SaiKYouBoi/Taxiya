@@ -103,14 +103,7 @@
                         </p>
                     </div>
                 </div>
-                <div
-                    class="px-8 py-6 bg-gray-50 dark:bg-[#15202b] border-t border-gray-100 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button
-                        class="w-full sm:w-auto bg-primary hover:bg-primary-dark text-white font-medium py-3 px-6 rounded-lg shadow-sm shadow-teal-500/30 transition-all flex items-center justify-center gap-2">
-                        <span class="material-icons text-lg">dashboard</span>
-                        Go to Dashboard (View Only)
-                    </button>
-                </div>
+                
             </div>
             <div class="mt-8 flex justify-center gap-6 text-xs text-slate-500 dark:text-slate-400">
                 <a class="hover:underline" href="#">Privacy Policy</a>

@@ -26,7 +26,7 @@ class VehicleRegistration extends Controller
             'year_manufacture' => ['required', 'digits:4', 'integer', 'min:1980', 'max:' . date('Y')],
             'taxi_number' => ['required', 'integer', 'unique:taxis,taxi_number'],
         ]);
-        
+
         $licensePlate = $request->plate_number . '-' .
             $request->plate_letter . '-' .
             $request->plate_region;
@@ -42,6 +42,6 @@ class VehicleRegistration extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect(route('driver.trip_managment', absolute: false));
+        return redirect(route('pending_validation', absolute: false));
     }
 }
