@@ -26,7 +26,7 @@ class TaxiSeeder extends Seeder
                 'model' => $taxiData[$index]['model'],
                 'vehicule_make' => $taxiData[$index]['vehicule_make'],
                 'year_manufacture' => $taxiData[$index]['year'],
-                'taxi_mumber' => rand(1000, 9999),
+                'taxi_number' => rand(1000, 9999),
                 'user_id' => $driver->id,
             ]);
         }

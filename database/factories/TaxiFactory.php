@@ -23,7 +23,7 @@ class TaxiFactory extends Factory
             'model' => fake()->word(),
             'vehicule_make' => fake()->company(),
             'year_manufacture' => fake()->year(),
-            'taxi_mumber' => fake()->unique()->numberBetween(100, 9999),
+            'taxi_number' => fake()->unique()->numberBetween(100, 9999),
             'user_id' => User::inRandomOrder()->value('id') ?? User::factory(),
         ];
     }
