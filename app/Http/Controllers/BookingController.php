@@ -8,7 +8,11 @@ use App\Models\Seat;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\DB;
+=======
+use Illuminate\Support\Str;
+>>>>>>> bc59522 (Sync: ajout méthode DriverBookings au BookingController)
 
 class BookingController extends Controller
 {
@@ -92,6 +96,7 @@ class BookingController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', 'Booking failed: ' . $e->getMessage());
         }
+<<<<<<< HEAD
     }
 }
 =======
@@ -102,3 +107,11 @@ class BookingController extends Controller
 
 }
 >>>>>>> 146ce31 (Added bookings controller changes to match bookings logic)
+=======
+
+        Mail::to(auth()->user()->email)->send(new BookingConfirmation($booking));
+
+        return redirect()->back()->with('success', 'Booking created successfully!');
+    }
+}
+>>>>>>> bc59522 (Sync: ajout méthode DriverBookings au BookingController)
