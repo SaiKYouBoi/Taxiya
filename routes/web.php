@@ -37,8 +37,11 @@ Route::get('/pending', function () {
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
-Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
+Route::post('/drivers/{driver}/approve', [DriverValidationController::class, 'approve'])
+    ->name('drivers.approve');
 
+Route::post('/drivers/{driver}/reject', [DriverValidationController::class, 'reject'])
+    ->name('drivers.reject');
 
 Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
 
@@ -52,8 +55,7 @@ Route::get('/create-trip', function () {
 Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
-
- Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
 Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
 ->name('mybookings.cancel');
 
@@ -69,7 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
+    Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 });
 
@@ -77,5 +79,6 @@ Route::get('taxi-info', [VehicleRegistration::class, 'create'])
     ->name('taxi-info');
 
 Route::post('taxi-info', [VehicleRegistration::class, 'store']);
+
 
 require __DIR__.'/auth.php';

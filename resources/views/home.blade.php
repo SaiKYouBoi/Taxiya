@@ -28,11 +28,13 @@
                                 Find a Ride
                                 <span class="material-icons">arrow_forward</span>
                             </a>
+                        <a href="{{ route('register') }}">
                         <button
                             class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 text-lg font-medium px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10">
                             <span class="material-icons">drive_eta</span>
                             Become a Driver
                         </button>
+                        </a>
                     </div>
                     <div class="mt-12 flex items-center gap-6 text-sm text-slate-200 font-medium">
                         <div class="flex items-center gap-2 drop-shadow-md">

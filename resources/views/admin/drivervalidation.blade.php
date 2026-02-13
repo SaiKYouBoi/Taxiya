@@ -102,7 +102,7 @@
                 href="#">
                 <span class="material-icons-round text-xl mr-3">verified_user</span>
                 <span class="font-medium">Driver Validations</span>
-                <span class="ml-auto bg-primary text-white py-0.5 px-2 rounded-lg text-xs font-bold shadow-sm">12</span>
+                
             </a>
             <a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-primary-900/20 hover:text-primary rounded-xl transition-colors duration-200 group"
                 href="#">
@@ -229,7 +229,7 @@
                                                 <div class="text-base font-bold text-slate-900 dark:text-white">
                                                     {{ $driver->name }}
                                                 </div>
-                                                <div class="text-sm text-slate-500">ID: #TX-9822</div>
+                                                <div class="text-sm text-slate-500">{{ 'TX-' . $driver->taxi->taxi_number }}</div>
                                             </div>
                                         </div>
                                     </td>
@@ -252,16 +252,22 @@
                                     </td>
                                     <td class="px-6 py-5 whitespace-nowrap text-right">
                                         <div class="flex items-center justify-end gap-3">
-                                            <button
+                                            <form method="POST" action="{{ route('drivers.reject', $driver->id) }}">
+                                                @csrf
+                                                <button
                                                 class="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg transition-colors text-sm font-semibold shadow-sm">
                                                 <span class="material-icons-round text-lg">close</span>
                                                 Reject
                                             </button>
-                                            <button
+                                            </form>
+                                            <form method="POST" action="{{ route('drivers.approve', $driver->id) }}">
+                                                @csrf
+                                                <button
                                                 class="flex items-center gap-2 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg transition-colors text-sm font-semibold shadow-md shadow-emerald-500/20">
                                                 <span class="material-icons-round text-lg">check</span>
                                                 Approve
                                             </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

@@ -23,13 +23,12 @@
                     </span>
                 </div>
             </div>
+            </a>
+
 
             @if (Route::has('login'))
                 @auth
                     <div class="flex items-center gap-0">
-
-                        <div class="h-6 w-[1px] bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
-
                         <div class="relative">
                             <img alt="User Profile Avatar"
                                 class="h-10 w-10 rounded-full object-cover ring-2 ring-white dark:ring-slate-800 shadow-md"
@@ -85,8 +84,9 @@
                                 href="{{ route('register') }}">
                                 Sign Up
                             </a>
-                        @endif
                         </div>
+                        @endif
+
                     @endauth
                     @endif
                     <!-- Hamburger -->
@@ -104,8 +104,8 @@
                         </button>
                     </div>
                 </div>
-        </div>
-        </a>
+    </div>
+
 
 
     </div>
