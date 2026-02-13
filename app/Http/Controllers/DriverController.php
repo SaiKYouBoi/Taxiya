@@ -7,7 +7,7 @@ use App\Models\User;
 class DriverController extends Controller
 { public function dashboard(){
 
-    // $driver = auth()->user();
+    $driver = auth()->user();
     $driver = User::whereHas('taxi')->first();
     $trips = $driver && $driver->taxi ?
     $driver->taxi->trips()

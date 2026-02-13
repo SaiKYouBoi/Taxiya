@@ -31,12 +31,22 @@
             </button>
         </div>
 
-        <div class="flex border-b border-gray-200 dark:border-gray-700 mb-8">
-            <button class="px-6 py-3 border-b-2 border-primary text-primary font-medium text-sm flex items-center gap-2">
-                <span class="material-icons-round text-lg">upcoming</span>
-                Upcoming Trips
-            </button>
-        </div>
+       <div class="flex border-b border-gray-200 dark:border-gray-700 mb-8 overflow-x-auto">
+    <a href="{{ route('mybookings.index', ['status' => 'upcoming']) }}"
+       class="px-6 py-3 border-b-2 {{ request('status') == 'upcoming' || !request('status') ? 'border-primary text-primary' : 'border-transparent text-gray-500' }} font-medium text-sm whitespace-nowrap">
+        Upcoming Trips
+    </a>
+
+    <a href="{{ route('mybookings.index', ['status' => 'completed']) }}"
+       class="px-6 py-3 border-b-2 {{ request('status') == 'completed' ? 'border-primary text-primary' : 'border-transparent text-gray-500' }} font-medium text-sm whitespace-nowrap">
+        Past Trips (Completed)
+    </a>
+
+    <a href="{{ route('mybookings.index', ['status' => 'cancelled']) }}"
+       class="px-6 py-3 border-b-2 {{ request('status') == 'cancelled' ? 'border-primary text-primary' : 'border-transparent text-gray-500' }} font-medium text-sm whitespace-nowrap">
+        Cancelled
+    </a>
+</div>
 
         <div class="space-y-4">
             @forelse($bookings as $booking)
@@ -88,7 +98,7 @@
                                     <span class="material-icons-round">person</span>
                                 </div>
                                 <div>
-                                    <p class="font-bold text-gray-900 dark:text-white">{{ $booking->trip->driver->user->name ?? 'Unknown' }}</p>
+                                    <p class="font-bold text-gray-900 dark:text-white">{{ optional($booking->trip->driver)->name ?? 'Unknown' }}</p>
                                     <div class="flex items-center text-xs text-yellow-500">
                                         <span class="material-icons-round text-sm">star</span>
                                         <span class="font-medium ml-1 text-gray-600 dark:text-gray-300">4.8</span>
@@ -107,7 +117,7 @@
                                 @if($canCancel)
                                     <form action="{{ route('mybookings.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr ?')">
                                         @csrf
-                                        @method('PATCH')
+                                        @method('POST')
                                         <button type="submit" class="w-full bg-white dark:bg-transparent border border-red-200 text-red-500 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2">
                                             <span class="material-icons-round text-sm">cancel</span>
                                             Cancel Booking
