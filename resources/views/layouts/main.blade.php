@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>TaxiYa - Grand Taxi Search Results</title>
@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -87,3 +88,4 @@
     @yield('content')
     @include('partials.footer')
 </body>
+</html>

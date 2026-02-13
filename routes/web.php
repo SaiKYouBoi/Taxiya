@@ -4,23 +4,28 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Auth\VehicleRegistration;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
 
 // Route::get('/user', function () {
 //     return view('auth.login_user');
 // });
 
+Route::get('/home', function () {
+    return view('home');
+});
+
 Route::get('/pending', function () {
     return view('auth.user_pending');
 });
 
-Route::get('/dashboard-info', function () {
-    return view('auth.user_info');
-})->name('driver-dashboard');
+// Route::get('/taxi-info', function () {
+//     return view('auth.user_info');
+// })->name('taxi-info');
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
@@ -51,5 +56,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 });
+
+Route::get('taxi-info', [VehicleRegistration::class, 'create'])
+    ->name('taxi-info');
+
+Route::post('taxi-info', [VehicleRegistration::class, 'store']);
 
 require __DIR__.'/auth.php';

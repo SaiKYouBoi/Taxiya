@@ -11,7 +11,7 @@ class Taxi extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['license_plate', 'model', 'vehicule_make', 'year_manufacture', 'taxi_mumber', 'user_id'];
+    protected $fillable = ['license_plate', 'model', 'vehicule_make', 'year_manufacture', 'taxi_number', 'user_id'];
 
     public function driver()
     {
