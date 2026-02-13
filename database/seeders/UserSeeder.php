@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'phone' => $driver['phone'],
                 'password' => Hash::make('password'),
                 'role' => 'driver',
-                'validated_at' => now(),
+                'email_verified_at' => now(),
                 'total_trips' => rand(10, 50),
             ]);
         }
