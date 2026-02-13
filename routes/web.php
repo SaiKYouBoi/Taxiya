@@ -8,6 +8,7 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Auth\VehicleRegistration;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MyBookingController;
 
 Route::get('/', function () {
     return view('home');
@@ -30,9 +31,9 @@ Route::get('/pending', function () {
 //     return view('auth.user_info');
 // })->name('taxi-info');
 
-Route::get('/my-bookings', function () {
-    return view('travler.mybookings');
-});
+
+
+
 
 Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
 
@@ -53,37 +54,10 @@ Route::get('/create-trip', [TripController::class, 'create']);
 Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 =======
 
-Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-
-Route::post('/Mybookings/{id}/cancel', [MyBookingController::class, 'cancel'])->name('mybookings.cancel');
 
 
-// @if($booking->status !== 'cancelled')
-//     <form action="{{ route('mybookings.cancel', $booking->id) }}" method="POST"
-//           onsubmit="return confirm('Êtes-vous sûr de vouloir annuler votre réservation ?')">
-//         @csrf
-//         @method('PATCH')
-
-//         <button type="submit"
-//                 class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg font-medium transition-all">
-//             <span class="material-icons-outlined text-sm">close</span>
-//             Annuler ma place
-//         </button>
-//     </form>
-// @else
-//     <span class="text-gray-400 italic text-sm">Cette réservation est annulée</span>
-// @endif
 
 
-// @php
-//     $departureTime = \Carbon\Carbon::parse($booking->trip->date_time);
-//     $canCancel = now()->diffInHours($departureTime, false) >= 24;
-// @endphp
-
-// @if($booking->status !== 'cancelled' && $canCancel)
-//     @elseif($booking->status !== 'cancelled' && !$canCancel)
-//     <span class="text-orange-500 text-xs">Annulation non autorisée (-24h)</span>
-// @endif
 
 
 >>>>>>> 146ce31 (Added bookings controller changes to match bookings logic)
@@ -98,6 +72,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+
+Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+->name('mybookings.cancel');
+
+Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+    ->name('mybookings.index');
+
 });
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])

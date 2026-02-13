@@ -34,7 +34,13 @@ class MyBookingController extends Controller
 }
 
     public function myBookings(Request $request){
-        $query=auth()->user()->bookings()->with('trip');
+        $bookings = auth()->user()
+        ->bookings()
+        ->with('trip')
+        ->latest()
+        ->get();
+
+    return view('travler.mybookings', compact('bookings'));
 
 
     }
