@@ -43,78 +43,6 @@
 
 <body
     class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 antialiased min-h-screen flex transition-colors duration-200">
-    <aside
-        class="w-64 bg-surface-light dark:bg-surface-dark border-r border-gray-200 dark:border-gray-700 flex flex-col fixed h-full z-10 transition-colors duration-200 hidden lg:flex">
-        <div class="p-6 flex items-center gap-3">
-            <div class="h-10 w-10 bg-primary rounded-lg flex items-center justify-center text-white relative shadow-sm overflow-hidden">
-                <span class="material-symbols-outlined text-2xl relative z-10">local_taxi</span>
-                <div class="absolute inset-0 bg-white/20 transform skew-x-12 -translate-x-4"></div>
-            </div>
-            <span class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">TaxiYa</span>
-        </div>
-        <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-            <div class="flex items-center gap-3 mb-4">
-                <img class="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
-                    data-alt="Portrait of taxi driver Ahmed Benali"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR_lIfA0UFJtZ_7oieMr-YRXIJ35Bkp-fvFvHcWOegNX-6xKz0JOJ_2jvnBumgM_WhOfPVhUoIIdXUniMRjl14Xyx9NYJXkQOMKADoEhk24RodWsnUW_LG_AENK948YdVaBAs4qgEV7wikE46oe44zQvk9InA3yHrd4wQfofYGrs9u1zrS4iIu6XFtN6L9cV7hLNtcE5w96qYcIgYVwUb8WOQprknOl5bMZBPqRWcDyi17UJyPkYyBZqsBlcAUg-VchwLcXY32pQ" />
-                <div>
-                    <h3 class="font-bold text-sm text-gray-900 dark:text-white">Ahmed Benali</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400">Mercedes 240 (Grand Taxi)</p>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-                <div class="bg-background-light dark:bg-background-dark p-3 rounded-lg text-center">
-                    <div class="flex justify-center text-yellow-500 mb-1">
-                        <span class="material-icons-outlined text-lg">star</span>
-                    </div>
-                    <span class="block text-lg font-bold">4.8</span>
-                    <span class="text-[10px] uppercase tracking-wider text-gray-500">Rating</span>
-                </div>
-                <div class="bg-background-light dark:bg-background-dark p-3 rounded-lg text-center">
-                    <div class="flex justify-center text-green-500 mb-1">
-                        <span class="material-icons-outlined text-lg">payments</span>
-                    </div>
-                    <span class="block text-lg font-bold">3.4k</span>
-                    <span class="text-[10px] uppercase tracking-wider text-gray-500">MAD Earned</span>
-                </div>
-            </div>
-        </div>
-        <nav class="flex-1 overflow-y-auto px-4 py-6 space-y-1">
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                href="#">
-                <span class="material-icons-outlined group-hover:text-primary transition-colors">dashboard</span>
-                <span class="font-medium">Dashboard</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary dark:bg-primary/20 font-medium"
-                href="#">
-                <span class="material-icons-outlined">alt_route</span>
-                <span>My Trips</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                href="#">
-                <span class="material-icons-outlined group-hover:text-primary transition-colors">history</span>
-                <span class="font-medium">History</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                href="#">
-                <span
-                    class="material-icons-outlined group-hover:text-primary transition-colors">account_balance_wallet</span>
-                <span class="font-medium">Earnings</span>
-            </a>
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                href="#">
-                <span class="material-icons-outlined group-hover:text-primary transition-colors">settings</span>
-                <span class="font-medium">Settings</span>
-            </a>
-        </nav>
-        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
-                href="#">
-                <span class="material-icons-outlined">logout</span>
-                <span class="font-medium">Log Out</span>
-            </a>
-        </div>
-    </aside>
     <header
         class="lg:hidden fixed top-0 w-full bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-700 z-20 px-4 py-3 flex items-center justify-between">
         <div class="flex items-center gap-2">
@@ -141,11 +69,13 @@
                 </nav>
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Create New Trip</h1>
             </div>
+            <a href="{{ route('driver.trip_managment') }}">
             <button
                 class="flex items-center justify-center gap-2 bg-surface-light border border-gray-200 hover:bg-gray-50 text-gray-700 px-5 py-3 rounded-xl shadow-sm transition-all font-medium dark:bg-surface-dark dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
                 <span class="material-icons-outlined">arrow_back</span>
                 Cancel
             </button>
+            </a>
         </div>
         <div class="max-w-3xl mx-auto w-full">
             <div
@@ -316,7 +246,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="taxi_id" value="{{ $taxis->first()->id ?? 1 }}">
+                    <input type="hidden" name="taxi_id" value="{{ auth()->user()->taxi->id }}">
                 </div>
                 <div
                     class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex flex-col-reverse sm:flex-row sm:justify-end gap-3 rounded-b-xl">
