@@ -52,5 +52,17 @@ class Trip extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function bookingSeats()
+    {
+        return $this->hasManyThrough(
+            BookingSeat::class,
+            Seat::class,
+            'trip_id',
+            'seat_id',
+            'id',
+            'id'       
+        );
+    }
+
 
 }

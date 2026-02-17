@@ -27,10 +27,10 @@ class Booking extends Model
     {
         return $this->belongsTo(User::class);
     }
-public function traveler()
-{
-    return $this->belongsTo(User::class, 'user_id');
-}
+    public function traveler()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     public function trip()
     {
@@ -55,8 +55,8 @@ public function traveler()
     public function seats()
     {
         return $this->belongsToMany(Seat::class, 'booking_seats', 'booking_id', 'seat_id')
-                    ->withPivot('price')
-                    ->withTimestamps();
+            ->withPivot('price')
+            ->withTimestamps();
     }
 
 }
