@@ -33,20 +33,20 @@ class TripController extends Controller
 
         $departure = $validated['departure_date'] . ' ' . $validated['departure_time'];
         $arrival = $validated['arrival_date'] . ' ' . $validated['arrival_time'];
-        
+
         $departureTime = strtotime($departure);
         $arrivalTime = strtotime($arrival);
         $diffHours = ($arrivalTime - $departureTime) / 3600;
-        
+
         if ($diffHours >= 24) {
             return redirect()->back()->withErrors(['arrival_date' => 'Arrival must be within 24 hours of departure'])->withInput();
         }
-        
+
         if ($diffHours <= 0) {
             return redirect()->back()->withErrors(['arrival_date' => 'Arrival must be after departure'])->withInput();
         }
 
-    
+
 
         $tripData = [
             'departure_city_id' => $validated['departure_city_id'],
@@ -61,7 +61,7 @@ class TripController extends Controller
             for ($i = 0; $i < 7; $i++) {
                 $newDeparture = date('Y-m-d H:i:s', strtotime($departure . ' +' . $i . ' days'));
                 $newArrival = date('Y-m-d H:i:s', strtotime($arrival . ' +' . $i . ' days'));
-                
+
                 Trip::create(array_merge($tripData, [
                     'departure_datetime' => $newDeparture,
                     'arrival_datetime' => $newArrival,
@@ -71,9 +71,9 @@ class TripController extends Controller
             Trip::create($tripData);
         }
 
-        return redirect()->back()->with('success', 'Trip(s) created successfully!');
+        return redirect()->route('driver.trip_managment');
     }
-    
+
     public function show($id)
     {
         $trip = Trip::with(['seats', 'departureCity', 'arrivalCity', 'taxi.driver'])->findOrFail($id);

@@ -77,7 +77,7 @@
                     <h3 class="font-bold text-sm text-gray-900 dark:text-white">{{ auth()->user()->name ?? 'quest' }}
                     </h3>
                     <p class="text-xs text-gray-500 dark:text-gray-400">
-                        {{ auth()->user()->taxi?->model ?? 'NO taxi Assigned' }}</p>
+                        {{ auth()->user()->taxi?->vehicule_make ?? 'NO taxi Assigned' }}</p>
                 </div>
             </div>
             <!-- Quick Stats -->
@@ -90,11 +90,12 @@
                     <span class="text-[10px] uppercase tracking-wider text-gray-500">Rating</span>
                 </div>
                 <div class="bg-background-light dark:bg-background-dark p-3 rounded-lg text-center">
-                    <div class="flex justify-center text-green-500 mb-1">
-                        <span class="material-icons-outlined text-lg">payments</span>
+                    <div class="flex justify-center text-red-500  mb-1">
+                        <span class="material-icons-outlined text-lg">local_taxi</span>
                     </div>
-                    <span class="block text-lg font-bold">3.4k</span>
-                    <span class="text-[10px] uppercase tracking-wider text-gray-500">MAD Earned</span>
+                    <span class="block text-lg font-bold">Taxi</span>
+                    <span
+                        class="text-[10px] uppercase tracking-wider text-gray-500">{{ 'TX-' . auth()->user()->taxi?->taxi_number ?? 'NO taxi Assigned' }}</span>
                 </div>
             </div>
         </div>
@@ -131,7 +132,8 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <div class="p-4 border-t border-gray-200 dark:border-gray-700">
-                <button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+                <button
+                    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
                     type="submit">
                     <span class="material-icons-outlined">logout</span>
                     <span class="font-medium">Log Out</span>
@@ -162,11 +164,13 @@
                 </nav>
                 <h1 class="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Trip Management</h1>
             </div>
-            <button
-                class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 font-medium">
-                <span class="material-icons-outlined">add_circle</span>
-                Create New Trip
-            </button>
+            <a href="{{ route('trips.create') }}">
+                <button
+                    class="flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white px-5 py-3 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 font-medium">
+                    <span class="material-icons-outlined">add_circle</span>
+                    Create New Trip
+                </button>
+            </a>
         </div>
         <!-- Filter & Search Bar -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
@@ -197,25 +201,32 @@
         </div>
         <!-- Trips List -->
         <div class="flex flex-col gap-4">
+            <!-- Trip Card 1 (Active/Today) -->
+
             @forelse($trips as $trip)
                 <div
                     class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+                    <div class="absolute right-0 top-0 p-4 opacity-10 md:opacity-100 md:relative md:p-0">
+                    </div>
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-
-                        <!-- Time & Date -->
-                        <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
+                        <div
+                            class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
                             <div class="text-2xl font-bold text-gray-900 dark:text-white">
-                                {{ \Carbon\Carbon::parse($trip->date_time)->format('H:i') }}
-                            </div>
+                                {{ \Carbon\Carbon::parse($trip->departure_datetime)->format('H:i') }}</div>
                             <div
                                 class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
-                                {{ \Carbon\Carbon::parse($trip->date_time)->isToday() ? 'Today' : \Carbon\Carbon::parse($trip->date_time)->format('d M') }}
+                                {{ \Carbon\Carbon::parse($trip->departure_datetime)->isToday() ? 'Today' : \Carbon\Carbon::parse($trip->date_time)->format('d M') }}
                             </div>
                         </div>
-
-                        <!-- Route -->
                         <div class="flex-1 flex flex-col gap-2">
                             <div class="flex items-center gap-4">
+                                <div class="flex flex-col items-center gap-1">
+                                    <div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                                    <div
+                                        class="w-0.5 h-8 bg-gray-200 dark:bg-gray-700 border-l border-dashed border-gray-300 dark:border-gray-600">
+                                    </div>
+                                    <div class="w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"></div>
+                                </div>
                                 <div class="flex-1 flex flex-col justify-between h-[60px] py-1">
                                     <div>
                                         <span class="text-xs text-gray-400 block mb-0.5">Start</span>
@@ -230,30 +241,42 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Occupancy -->
                         <div
                             class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
                             <div class="flex justify-between items-end mb-2">
                                 <span
                                     class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Occupancy</span>
                                 <span class="text-lg font-bold text-primary">
-                                    {{ $trip->bookings->sum('seats_count') }}<span
-                                        class="text-gray-400 text-sm">/6</span>
+                                    {{ $trip->bookingSeats->count() }}<span class="text-gray-400 text-sm">/6</span>
                                 </span>
                             </div>
                             <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
                                 <div class="bg-primary h-full rounded-full"
-                                    style="width: {{ ($trip->bookings->sum('seats_count') / 6) * 100 }}%"></div>
+                                    style="width: {{ ($trip->bookingSeats->count() / 6) * 100 }}%"></div>
                             </div>
                         </div>
 
-                        <!-- Actions -->
-                        <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
-                            <button
-                                class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg shadow-md hover:bg-blue-600 transition-colors">
-                                View Details
-                            </button>
+
+                        <div
+                            class="flex flex-col items-end gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700 min-w-[150px]">
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-gray-900 dark:text-white">{{ $trip->base_price }}
+                                    MAD</div>
+                                <div class="text-xs text-gray-500 dark:text-gray-400">per seat</div>
+                            </div>
+                            @if ($trip->status !== 'cancelled')
+                                <form method="POST" action="{{ route('driver.trips.cancel', $trip->id) }}">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button 
+                                        class="flex items-center justify-center gap-1 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors w-full border border-red-200 dark:border-red-900/30">
+                                        <span class="material-icons-outlined text-sm">cancel</span>
+                                        Cancel Trip
+                                    </button>
+                                </form>
+                            @else
+                                <span class="text-red-500 font-bold">Cancelled</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -262,75 +285,6 @@
                     <p class="text-gray-500">Vous n'avez pas encore créé de trajets.</p>
                 </div>
             @endforelse
-            <!-- Trip Card 1 (Active/Today) -->
-            <!-- <div
-                class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
-                <div class="absolute right-0 top-0 p-4 opacity-10 md:opacity-100 md:relative md:p-0">
-                 </div>
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                     <div class="flex flex-row md:flex-col items-center md:items-start gap-3 md:gap-1 min-w-[120px]">
-                        <div class="text-2xl font-bold text-gray-900 dark:text-white">14:30</div>
-                        <div
-                            class="text-sm font-medium text-primary uppercase tracking-wide bg-primary/10 px-2 py-0.5 rounded">
-                            Today</div>
-                    </div>
-                     <div class="flex-1 flex flex-col gap-2">
-                        <div class="flex items-center gap-4">
-                            <div class="flex flex-col items-center gap-1">
-                                <div class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-                                <div
-                                    class="w-0.5 h-8 bg-gray-200 dark:bg-gray-700 border-l border-dashed border-gray-300 dark:border-gray-600">
-                                </div>
-                                <div class="w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"></div>
-                            </div>
-                            <div class="flex-1 flex flex-col justify-between h-[60px] py-1">
-                                <div>
-                                    <span class="text-xs text-gray-400 block mb-0.5">Start</span>
-                                    <h3 class="font-bold text-gray-700 dark:text-gray-200">Casablanca <span
-                                            class="text-gray-400 font-normal text-sm ml-1">(Gare Voyageurs)</span></h3>
-                                </div>
-                                <div>
-                                    <span class="text-xs text-gray-400 block mb-0.5">Destination</span>
-                                    <h3 class="font-bold text-gray-900 dark:text-white">Rabat <span
-                                            class="text-gray-400 font-normal text-sm ml-1">(Agdal)</span></h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                     <div
-                        class="min-w-[180px] bg-background-light dark:bg-background-dark p-4 rounded-lg border border-gray-100 dark:border-gray-800">
-                        <div class="flex justify-between items-end mb-2">
-                            <span
-                                class="text-xs text-gray-500 dark:text-gray-400 font-medium uppercase">Occupancy</span>
-                            <span class="text-lg font-bold text-primary">6<span
-                                    class="text-gray-400 text-sm">/6</span></span>
-                        </div>
-                        <div class="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden">
-                            <div class="bg-primary h-full rounded-full" style="width: 100%"></div>
-                        </div>
-                        <div class="mt-2 text-xs text-green-600 font-medium flex items-center gap-1">
-                            <span class="material-icons-outlined text-sm">check_circle</span>
-                            Full Capacity
-                        </div>
-                    </div>
-                     <div class="flex items-center gap-2 md:border-l md:pl-6 border-gray-200 dark:border-gray-700">
-                        <button
-                            class="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
-                            title="Edit">
-                            <span class="material-icons-outlined">edit</span>
-                        </button>
-                        <button
-                            class="p-2 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors"
-                            title="Duplicate">
-                            <span class="material-icons-outlined">content_copy</span>
-                        </button>
-                        <button
-                            class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg shadow-md shadow-primary/20 hover:bg-blue-600 transition-colors">
-                            Start Trip
-                        </button>
-                    </div>
-                </div>
-            </div> -->
             <!-- Trip Card 2 (Upcoming) -->
             <!-- <div
                 class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow group">

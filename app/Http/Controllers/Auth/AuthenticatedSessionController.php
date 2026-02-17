@@ -28,7 +28,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        $user = $request->user();
+
+        return match ($user->role) {
+            'admin' => redirect()->route('admin.driver.validation'),
+            'driver' => redirect()->route('driver.trip_managment'),
+            default => redirect()->intended(route('home', absolute: false)),
+        };
     }
 
     /**

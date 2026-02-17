@@ -28,6 +28,7 @@
                                 Find a Ride
                                 <span class="material-icons">arrow_forward</span>
                             </a>
+                        <a href="{{ route('register') }}"
                         <button
                             class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 text-lg font-medium px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/10">
                             <span class="material-icons">drive_eta</span>

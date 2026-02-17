@@ -102,7 +102,7 @@
                 href="#">
                 <span class="material-icons-round text-xl mr-3">verified_user</span>
                 <span class="font-medium">Driver Validations</span>
-                
+
             </a>
             <a class="flex items-center px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-primary-900/20 hover:text-primary rounded-xl transition-colors duration-200 group"
                 href="#">
@@ -229,7 +229,7 @@
                                                 <div class="text-base font-bold text-slate-900 dark:text-white">
                                                     {{ $driver->name }}
                                                 </div>
-                                                <div class="text-sm text-slate-500">{{ 'TX-' . $driver->taxi->taxi_number }}</div>
+                                                <div class="text-sm text-slate-500">TX-{{ $driver->taxi->taxi_number ?? '' }}</div>
                                             </div>
                                         </div>
                                     </td>

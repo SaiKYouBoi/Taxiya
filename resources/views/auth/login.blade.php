@@ -93,7 +93,7 @@
         </div>
         <!-- Right Side: Login Form -->
         <div
-            class="w-full lg:w-1/2 flex items-center justify-center bg-white dark:bg-background-dark p-8 lg:p-16 relative">
+            class="w-full h-full lg:w-1/2 flex items-center justify-center bg-white dark:bg-background-dark p-8 lg:p-16 relative">
             <!-- Mobile Background Decoration (visible only on small screens if needed, keeping simple for now) -->
             <div
                 class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none">

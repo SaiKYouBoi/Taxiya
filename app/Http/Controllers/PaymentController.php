@@ -41,6 +41,6 @@ class PaymentController extends Controller
 
         $booking->update(['status' => 'confirmed']);
 
-        return redirect()->route('home')->with('success', 'Payment completed successfully!');
+        return redirect()->route('mybookings.index');
     }
 }
