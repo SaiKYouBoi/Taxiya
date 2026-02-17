@@ -55,5 +55,15 @@ class UserSeeder extends Seeder
                 'total_trips' => rand(0, 20),
             ]);
         }
+
+        User::create([
+            'name' => 'Admin TaxiYa',
+            'email' => 'admin@taxiya.ma',
+            'phone' => '+212600000000',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+            'email_verified_at' => now(),
+            'total_trips' => 0,
+        ]);
     }
 }
