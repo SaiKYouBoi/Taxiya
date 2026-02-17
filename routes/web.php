@@ -10,110 +10,91 @@ use App\Http\Controllers\Auth\VehicleRegistration;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MyBookingController;
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::middleware(['auth', 'driver', 'hasTaxi', 'isValidated'])->group(function () {
+    Route::get('/create-trip', [TripController::class, 'create'])->name('trips.create');
+    Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
+    Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
 
-// Route::get('/user', function () {
-//     return view('auth.login_user');
-// });
-
-Route::get('/home', function () {
-    return view('home');
 });
 
 Route::get('/pending', function () {
     return view('auth.user_pending');
-})->name('pending_validation');
+})->middleware(['auth','driver','noValidation'])->name('pending_validation');
 
 
-// Route::get('/taxi-info', function () {
-//     return view('auth.user_info');
-// })->name('taxi-info');
+Route::middleware(['auth', 'admin'])->group(function () {
 
+    Route::post('/drivers/{driver}/approve', [DriverValidationController::class, 'approve'])
+        ->name('drivers.approve');
 
+    Route::post('/drivers/{driver}/reject', [DriverValidationController::class, 'reject'])
+        ->name('drivers.reject');
 
+    Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
 
-
-Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
-Route::get('/search-trip/{id}', [SearchController::class, 'show'])->name('search.show');
-
-Route::post('/drivers/{driver}/approve', [DriverValidationController::class, 'approve'])
-    ->name('drivers.approve');
-
-Route::post('/drivers/{driver}/reject', [DriverValidationController::class, 'reject'])
-    ->name('drivers.reject');
-
-Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show') ;
-
-Route::get('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
-Route::post('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
-
-Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-
-Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-
-Route::get('/payment', function () {
-    return view('travler.payment');
-});
-Route::get('/create-trip', [TripController::class, 'create'])->name('trips.create');
-Route::get('/create-trip', function () {
-    return view('driver.create_trip');
 });
 
-Route::get('/create-trip', [TripController::class, 'create']);
-Route::post('/trips', [TripController::class, 'store'])->name('trips.store');
+Route::middleware(['auth', 'traveler'])->group(function () {
 
+    Route::get('/search-trip', [SearchController::class, 'displaySearch'])->name('trip.search');
+    Route::get('/search-trip/{id}', [SearchController::class, 'show'])->name('search.show');
 
+    Route::get('/trips/{id}', [TripController::class, 'show'])->name('trips.show');
 
+    Route::get('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'show'])->name('payment.show');
+    Route::post('/payment/{booking}', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment.store');
 
- Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
-->name('mybookings.cancel');
+    Route::post('/bookings/{id}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
-Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
-    ->name('mybookings.index');
+    Route::get('/payment', function () {
+        return view('travler.payment');
+    });
 
+    Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+        ->name('mybookings.cancel');
 
+    Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+        ->name('mybookings.index');
 
+    Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+        ->name('mybookings.cancel');
 
+    Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+        ->name('mybookings.index');
 
-Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
-->name('mybookings.cancel');
-
-Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
-    ->name('mybookings.index');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
+
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 
- Route::get('/trip-managment', [DriverController::class, 'dashboard'])->name('driver.trip_managment');
-Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
-->name('mybookings.cancel');
+    Route::post('/mybookings/{id}/cancel', [MyBookingController::class, 'cancelBooking'])
+        ->name('mybookings.cancel');
 
-Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
-    ->name('mybookings.index');
+    Route::get('/mybookings', [MyBookingController::class, 'myBookings'])
+        ->name('mybookings.index');
 
+    Route::patch('/driver/trips/{trip}/cancel', [DriverController::class, 'cancel'])
+        ->name('driver.trips.cancel');
+
+    Route::get('/home', function () {
+        return view('home');
     });
-    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::get('/admin/driver-validation', [DriverValidationController::class, 'validation'])->name('admin.driver.validation');
-    
+
+    Route::get('/', function () {
+        return view('home');
+    })->name('home');
+});
+
+Route::get('/dashboard', function () {
+    return view('home');
+})->middleware(['auth', 'verified', 'traveler'])->name('dashboard');
+
 
 Route::get('taxi-info', [VehicleRegistration::class, 'create'])
-    ->name('taxi-info');
+    ->middleware(['auth', 'driver','noTaxi'])->name('taxi-info');
 
-Route::post('taxi-info', [VehicleRegistration::class, 'store']);
+Route::post('taxi-info', [VehicleRegistration::class, 'store'])->middleware(['auth', 'driver']);
 
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
